@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivante Turtle Creek — Media Intelligence | Allyn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root {
+    --red: #CE202E;
+    --red-light: #fdeaea;
+    --dark: #111111;
+    --dark-2: #1e1e1e;
+    --gray: #888A8D;
+    --gray-light: #f2f2f0;
+    --border: #e0e0e0;
+    --white: #ffffff;
+    --green: #2a7a4b;
+    --amber: #d97706;
+    --font-condensed: 'Barlow Condensed', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--gray-light);
+    color: var(--dark);
+    min-height: 100vh;
+    font-size: 13px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--dark);
+    padding: 0 28px;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,.4);
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+  }
+
+  .allyn-bug {
+    width: 38px;
+    height: 38px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--white);
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .header-title {
+    font-family: var(--font-condensed);
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .header-sub {
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 1px;
+  }
+
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 14px 0;
+    border-left: 1px solid #2a2a2a;
+    padding-left: 20px;
+    margin-left: 20px;
+  }
+
+  .client-label {
+    font-size: 10px;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .client-name {
+    font-family: var(--font-condensed);
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+
+  .period {
+    font-size: 11px;
+    color: var(--gray);
+  }
+
+  .red-bar { height: 3px; background: var(--red); }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    overflow-x: auto;
+    position: sticky;
+    top: 67px;
+    z-index: 99;
+  }
+
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    padding: 12px 20px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--gray);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .nav-btn:hover { color: var(--dark); }
+  .nav-btn.active { color: var(--red); border-bottom-color: var(--red); }
+
+  .nav-star { color: var(--red); margin-right: 4px; }
+
+  /* ── LAYOUT ── */
+  .content {
+    padding: 20px 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .tab { display: none; flex-direction: column; gap: 16px; }
+  .tab.active { display: flex; }
+
+  .section-label {
+    font-family: var(--font-condensed);
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--gray);
+    margin-bottom: 8px;
+  }
+
+  /* ── KPI GRIDS ── */
+  .kpi-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .kpi-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+  @media (max-width: 900px) {
+    .kpi-4 { grid-template-columns: repeat(2, 1fr); }
+    .kpi-3 { grid-template-columns: repeat(2, 1fr); }
+    .g2, .g32 { grid-template-columns: 1fr; }
+  }
+
+  .kpi {
+    background: var(--white);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .kpi:hover { box-shadow: 0 4px 16px rgba(0,0,0,.07); }
+
+  .kpi::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--red);
+  }
+
+  .kpi-label {
+    font-size: 10px;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+
+  .kpi-value {
+    font-family: var(--font-condensed);
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1;
+    color: var(--dark);
+  }
+
+  .kpi-sub {
+    font-size: 11px;
+    margin-top: 4px;
+  }
+
+  .up { color: var(--green); }
+  .dn { color: var(--red); }
+  .fl { color: var(--gray); }
+  .warn { color: var(--amber); }
+
+  /* ── CARDS ── */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .g32 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+
+  .card {
+    background: var(--white);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    transition: box-shadow 0.2s;
+  }
+
+  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.06); }
+
+  .card-title {
+    font-family: var(--font-condensed);
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dark);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .card-title::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+
+  /* ── BAR ROWS ── */
+  .bar-rows { display: flex; flex-direction: column; gap: 8px; }
+
+  .bar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bar-lbl {
+    font-size: 11px;
+    color: #444;
+    flex-shrink: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 7px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+  .bar-val { font-size: 11px; font-weight: 700; color: var(--dark); text-align: right; flex-shrink: 0; min-width: 54px; }
+
+  /* ── TABLES ── */
+  .table-wrap { overflow-x: auto; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  th {
+    text-align: left;
+    padding: 6px 10px;
+    color: var(--gray);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 7px 10px; border-bottom: 0.5px solid #f5f5f5; color: var(--dark); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafafa; }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .b-green { background: #e6f4ec; color: var(--green); }
+  .b-red { background: var(--red-light); color: var(--red); }
+  .b-amber { background: #fef3e2; color: var(--amber); }
+  .b-gray { background: #f0f0f0; color: var(--gray); }
+
+  /* ── COMP ITEMS ── */
+  .comp-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    border: 0.5px solid #eee;
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+  .comp-item:last-child { margin-bottom: 0; }
+  .comp-item.highlight { border-color: var(--red); background: var(--red-light); }
+  .comp-item.highlight .comp-name { color: var(--red); font-weight: 700; }
+  .comp-item.highlight .comp-val { color: var(--red); }
+  .comp-val { font-weight: 700; }
+
+  /* ── CALLOUT NOTE ── */
+  .note {
+    font-size: 11px;
+    color: var(--gray);
+    line-height: 1.6;
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    border-left: 3px solid var(--red);
+  }
+
+  /* ── SCORE ROW ── */
+  .score-row { display: flex; gap: 12px; }
+  .score {
+    background: var(--white);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    flex: 1;
+    text-align: center;
+  }
+  .score-num { font-family: var(--font-condensed); font-weight: 500; font-size: 36px; line-height: 1; }
+  .score-lbl { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+  .s-green { color: var(--green); }
+  .s-amber { color: var(--amber); }
+  .s-red { color: var(--red); }
+
+  /* ── ANALYST SECTION ── */
+  .analyst {
+    background: var(--dark);
+    border-radius: 8px;
+    padding: 20px 22px;
+  }
+
+  .analyst-label {
+    font-family: var(--font-condensed);
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--red);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .analyst-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #2a2a2a;
+  }
+
+  .analyst-findings { display: flex; flex-direction: column; gap: 14px; }
+
+  .finding {
+    border-left: 2px solid var(--red);
+    padding-left: 14px;
+    animation: fadeIn 0.4s ease forwards;
+    opacity: 0;
+  }
+
+  .finding:nth-child(1) { animation-delay: 0.1s; }
+  .finding:nth-child(2) { animation-delay: 0.2s; }
+  .finding:nth-child(3) { animation-delay: 0.3s; }
+  .finding:nth-child(4) { animation-delay: 0.4s; }
+  .finding:nth-child(5) { animation-delay: 0.5s; }
+  .finding:nth-child(6) { animation-delay: 0.6s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .finding-title {
+    font-family: var(--font-condensed);
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 5px;
+  }
+
+  .finding-num {
+    font-family: var(--font-condensed);
+    font-size: 10px;
+    color: var(--red);
+    margin-right: 6px;
+  }
+
+  .finding-text {
+    font-size: 12px;
+    color: #999;
+    line-height: 1.7;
+  }
+
+  .finding-text strong { color: var(--white); }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--dark);
+    padding: 12px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 32px;
+  }
+
+  .footer-left { font-size: 11px; color: var(--gray); }
+  .footer-left span { color: var(--red); }
+  .footer-right {
+    font-family: var(--font-condensed);
+    font-weight: 500;
+    font-size: 11px;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── TAG CLOUD ── */
+  .tag-cloud { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag {
+    padding: 5px 11px;
+    border-radius: 4px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .tag-red { background: var(--red); }
+  .tag-dark { background: var(--dark); }
+  .tag-gray { background: var(--gray); font-size: 11px; }
+
+  /* ── CHART CONTAINERS ── */
+  .chart-wrap { position: relative; height: 200px; }
+  .chart-wrap-sm { position: relative; height: 160px; }
+
+  /* ── PRIORITY FLAG ── */
+  .priority-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+  .flag-red { background: var(--red-light); color: var(--red); }
+  .flag-amber { background: #fef3e2; color: var(--amber); }
+  .flag-green { background: #e6f4ec; color: var(--green); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="allyn-bug">allyn</div>
+    <div>
+      <div class="header-title">Media Intelligence Dashboard</div>
+      <div class="header-sub">Google Ads &middot; Google Analytics &middot; Meta &middot; SEMrush &middot; MuckRack &middot; Hootsuite Listening</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="client-label">Client</div>
+    <div class="client-name">Vivante Turtle Creek</div>
+    <div class="period">Apr 1 &ndash; May 12, 2026</div>
+  </div>
+</div>
+<div class="red-bar"></div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showTab('overview', this)">Overview</button>
+  <button class="nav-btn" onclick="showTab('website', this)">Website</button>
+  <button class="nav-btn" onclick="showTab('paid', this)">Paid Media</button>
+  <button class="nav-btn" onclick="showTab('social', this)">Social</button>
+  <button class="nav-btn" onclick="showTab('seo', this)">SEO &amp; Site Health</button>
+  <button class="nav-btn" onclick="showTab('earned', this)">Earned Media</button>
+  <button class="nav-btn" onclick="showTab('analysis', this)"><span class="nav-star">&#9733;</span>Allyn Analysis</button>
+</nav>
+
+<div class="content">
+
+  <!-- OVERVIEW -->
+  <div id="tab-overview" class="tab active">
+    <div>
+      <div class="section-label">All Channels at a Glance &mdash; Apr 1 to May 12, 2026</div>
+      <div class="kpi-4">
+        <div class="kpi"><div class="kpi-label">Website Sessions</div><div class="kpi-value">17,290</div><div class="kpi-sub fl">49.2% engagement rate</div></div>
+        <div class="kpi"><div class="kpi-label">Google Ads Spend</div><div class="kpi-value">$35.5K</div><div class="kpi-sub warn">257 conv &middot; $138/conv avg</div></div>
+        <div class="kpi"><div class="kpi-label">Organic Sessions</div><div class="kpi-value">3,900</div><div class="kpi-sub fl">22.6% of all sessions</div></div>
+        <div class="kpi"><div class="kpi-label">Earned Media Reach</div><div class="kpi-value">9.7M</div><div class="kpi-sub up">+15.7% vs prior period</div></div>
+      </div>
+    </div>
+    <div class="kpi-4">
+      <div class="kpi"><div class="kpi-label">Key Events (Goals)</div><div class="kpi-value">575</div><div class="kpi-sub fl">1.75% site-wide rate</div></div>
+      <div class="kpi"><div class="kpi-label">Social Eng. Rate</div><div class="kpi-value">14.9%</div><div class="kpi-sub up">Strong vs competitors</div></div>
+      <div class="kpi"><div class="kpi-label">Mobile Perf. Score</div><div class="kpi-value">64</div><div class="kpi-sub warn">950ms blocking time</div></div>
+      <div class="kpi"><div class="kpi-label">Press Articles (YTD)</div><div class="kpi-value">16</div><div class="kpi-sub dn">vs CC Young 177</div></div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-title">Traffic by Channel</div>
+        <div class="bar-rows">
+          <div class="bar-item"><div class="bar-lbl" style="width:120px;">Paid Search</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--red);"></div></div><div class="bar-val">5,190</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:120px;">Organic Search</div><div class="bar-track"><div class="bar-fill" style="width:75%;background:var(--dark);"></div></div><div class="bar-val">3,900</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:120px;">Cross-network</div><div class="bar-track"><div class="bar-fill" style="width:71%;background:var(--gray);"></div></div><div class="bar-val">3,661</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:120px;">Direct</div><div class="bar-track"><div class="bar-fill" style="width:44%;background:var(--gray);opacity:.6;"></div></div><div class="bar-val">2,259</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:120px;">Paid Social</div><div class="bar-track"><div class="bar-fill" style="width:34%;background:var(--gray);opacity:.4;"></div></div><div class="bar-val">1,758</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:120px;">Organic Social</div><div class="bar-track"><div class="bar-fill" style="width:3%;background:#ccc;"></div></div><div class="bar-val">159</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Channel Quality &mdash; Engagement Rate</div>
+        <div class="bar-rows">
+          <div class="bar-item"><div class="bar-lbl" style="width:120px;">Referral</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--green);"></div></div><div class="bar-val">74.1%</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:120px;">Organic Search</div><div class="bar-track"><div class="bar-fill" style="width:93%;background:var(--green);opacity:.8;"></div></div><div class="bar-val">69.2%</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:120px;">Organic Social</div><div class="bar-track"><div class="bar-fill" style="width:81%;background:var(--green);opacity:.7;"></div></div><div class="bar-val">60.4%</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:120px;">Paid Search</div><div class="bar-track"><div class="bar-fill" style="width:78%;background:var(--amber);"></div></div><div class="bar-val">57.7%</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:120px;">Direct</div><div class="bar-track"><div class="bar-fill" style="width:47%;background:var(--red);opacity:.5;"></div></div><div class="bar-val">34.9%</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:120px;">Paid Social</div><div class="bar-track"><div class="bar-fill" style="width:45%;background:var(--red);opacity:.4;"></div></div><div class="bar-val">33.2%</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-title">Google Ads — Spend by Campaign</div>
+        <div class="chart-wrap"><canvas id="campaignChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Competitor Social Followers</div>
+        <div class="comp-item"><span class="comp-name">CC Young</span><span class="comp-val">5,802</span></div>
+        <div class="comp-item"><span class="comp-name">Preston of the Park Cities</span><span class="comp-val">1,190</span></div>
+        <div class="comp-item"><span class="comp-name">Ventana by Buckner</span><span class="comp-val">1,168</span></div>
+        <div class="comp-item"><span class="comp-name">Belmont Village</span><span class="comp-val">708</span></div>
+        <div class="comp-item highlight"><span class="comp-name">Vivante Turtle Creek</span><span class="comp-val">201</span></div>
+        <div class="comp-item"><span class="comp-name">Clearwater Highland Park</span><span class="comp-val">105</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEBSITE -->
+  <div id="tab-website" class="tab">
+    <div>
+      <div class="section-label">Google Analytics 4 &mdash; vivanteliving.com &mdash; Apr 1 to May 12, 2026</div>
+      <div class="kpi-4">
+        <div class="kpi"><div class="kpi-label">Total Sessions</div><div class="kpi-value">17,290</div><div class="kpi-sub fl">14,335 active users</div></div>
+        <div class="kpi"><div class="kpi-label">New Users</div><div class="kpi-value">13,807</div><div class="kpi-sub fl">80% of all users</div></div>
+        <div class="kpi"><div class="kpi-label">Key Events</div><div class="kpi-value">575</div><div class="kpi-sub fl">1.75% conversion rate</div></div>
+        <div class="kpi"><div class="kpi-label">Avg Engagement</div><div class="kpi-value">45s</div><div class="kpi-sub warn">Homepage avg only 28s</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Top Landing Pages by Sessions</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Landing Page</th><th>Sessions</th><th>New Users</th><th>Avg Eng. Time</th><th>Key Events</th><th>Event Rate</th></tr></thead>
+          <tbody>
+            <tr><td>/assisted-living-newport-center</td><td>6,019</td><td>4,910</td><td>28s</td><td>163</td><td><span class="badge b-amber">1.73%</span></td></tr>
+            <tr><td>/vivante-landing-page-proposal-1</td><td>3,244</td><td>3,046</td><td>41s</td><td>34</td><td><span class="badge b-red">0.83%</span></td></tr>
+            <tr><td>/ (homepage)</td><td>2,095</td><td>1,503</td><td>1m 31s</td><td>91</td><td><span class="badge b-green">3.34%</span></td></tr>
+            <tr><td>/assisted-living-newport-mesa</td><td>1,170</td><td>941</td><td>1m 01s</td><td>58</td><td><span class="badge b-amber">2.74%</span></td></tr>
+            <tr><td>/newport-mesa</td><td>676</td><td>630</td><td>33s</td><td>12</td><td><span class="badge b-red">0.59%</span></td></tr>
+            <tr><td style="font-weight:700;color:var(--red)">/turtle-creek-new</td><td>499</td><td>413</td><td>57s</td><td>2</td><td><span class="badge b-red">0.20%</span></td></tr>
+            <tr><td>/newport-center</td><td>448</td><td>373</td><td>1m 20s</td><td>14</td><td><span class="badge b-amber">2.46%</span></td></tr>
+            <tr><td>/memory-care-newport-mesa</td><td>178</td><td>153</td><td>1m 08s</td><td>7</td><td><span class="badge b-amber">2.81%</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">The /turtle-creek-new page receives 499 sessions but converts at only 0.20% — the lowest key event rate on the site. This is the primary pre-sales page for the Turtle Creek project and it is significantly underperforming.</div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-title">Sessions by Channel</div>
+        <div class="chart-wrap"><canvas id="channelChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Channel Engagement Depth</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Channel</th><th>Eng. Rate</th><th>Avg Time</th><th>Events/Session</th></tr></thead>
+            <tbody>
+              <tr><td>Referral</td><td><span class="badge b-green">74.1%</span></td><td>5m 36s</td><td>20.3</td></tr>
+              <tr><td>Organic Search</td><td><span class="badge b-green">69.2%</span></td><td>1m 22s</td><td>10.5</td></tr>
+              <tr><td>Organic Social</td><td><span class="badge b-green">60.4%</span></td><td>39s</td><td>8.1</td></tr>
+              <tr><td>Paid Search</td><td><span class="badge b-amber">57.7%</span></td><td>48s</td><td>7.0</td></tr>
+              <tr><td>Direct</td><td><span class="badge b-red">34.9%</span></td><td>31s</td><td>7.8</td></tr>
+              <tr><td>Paid Social</td><td><span class="badge b-red">33.2%</span></td><td>7s</td><td>4.6</td></tr>
+              <tr><td>Cross-network</td><td><span class="badge b-red">30.4%</span></td><td>14s</td><td>4.4</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAID MEDIA -->
+  <div id="tab-paid" class="tab">
+    <div>
+      <div class="section-label">Google Ads &mdash; Feb 1 to Apr 20, 2026</div>
+      <div class="kpi-4">
+        <div class="kpi"><div class="kpi-label">Total Spend</div><div class="kpi-value">$35.5K</div><div class="kpi-sub fl">6 active campaigns</div></div>
+        <div class="kpi"><div class="kpi-label">Conversions</div><div class="kpi-value">257</div><div class="kpi-sub warn">Avg $138 per conv</div></div>
+        <div class="kpi"><div class="kpi-label">Total Clicks</div><div class="kpi-value">18,552</div><div class="kpi-sub fl">Avg CPC $1.91</div></div>
+        <div class="kpi"><div class="kpi-label">Impressions</div><div class="kpi-value">412K</div><div class="kpi-sub fl">All campaigns</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Campaign Efficiency</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Campaign</th><th>Type</th><th>Spend</th><th>Conv.</th><th>Cost/Conv.</th><th>Rating</th></tr></thead>
+          <tbody>
+            <tr><td>Brand Search</td><td>Search</td><td>$5,183</td><td>124.5</td><td>$41.63</td><td><span class="badge b-green">Most Efficient</span></td></tr>
+            <tr><td>YouTube Conversions</td><td>Demand Gen</td><td>$3,591</td><td>65.0</td><td>$55.24</td><td><span class="badge b-green">Efficient</span></td></tr>
+            <tr><td>OC Assisted Living</td><td>Search</td><td>$22,768</td><td>62.5</td><td>$364.28</td><td><span class="badge b-red">High CPA</span></td></tr>
+            <tr><td>Memory Care</td><td>Search</td><td>$3,302</td><td>5.0</td><td>$660.43</td><td><span class="badge b-red">Review Now</span></td></tr>
+            <tr><td>YouTube Awareness &times;2</td><td>Video</td><td>$652</td><td>0</td><td>&mdash;</td><td><span class="badge b-gray">Awareness</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-title">Spend vs Conversions by Campaign</div>
+        <div class="chart-wrap"><canvas id="convChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Top Keywords by Spend</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Keyword</th><th>Spend</th><th>Conv.</th><th>CPC</th></tr></thead>
+            <tbody>
+              <tr><td>"assisted living orange county"</td><td>$7,418</td><td>15.5</td><td>$15.55</td></tr>
+              <tr><td>[vivante costa mesa]</td><td>$1,467</td><td>39.0</td><td>$4.92</td></tr>
+              <tr><td>[vivante newport center]</td><td>$1,069</td><td>27.5</td><td>$3.97</td></tr>
+              <tr><td style="color:var(--red);">"memory care assisted living"</td><td>$1,065</td><td><strong>0</strong></td><td>$14.80</td></tr>
+              <tr><td>"assisted living huntington beach"</td><td>$2,223</td><td>4.0</td><td>$16.35</td></tr>
+              <tr><td>"assisted living costa mesa"</td><td>$2,027</td><td>10.5</td><td>$17.32</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Meta / Instagram Ads &mdash; Apr 1 to May 12, 2026</div>
+      <div class="kpi-4">
+        <div class="kpi"><div class="kpi-label">Total Meta Spend</div><div class="kpi-value">$1,027</div><div class="kpi-sub fl">6 active ad sets</div></div>
+        <div class="kpi"><div class="kpi-label">Cost Per Click</div><div class="kpi-value">$1.01</div><div class="kpi-sub fl">Turtle Creek account</div></div>
+        <div class="kpi"><div class="kpi-label">Top Reach</div><div class="kpi-value">3,407</div><div class="kpi-sub fl">New Awareness Campaign</div></div>
+        <div class="kpi"><div class="kpi-label">Paid Social Sessions</div><div class="kpi-value">1,758</div><div class="kpi-sub warn">33.2% engagement rate</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div id="tab-social" class="tab">
+    <div>
+      <div class="section-label">Hootsuite Performance Report &mdash; Apr 1 to May 12, 2026</div>
+      <div class="kpi-4">
+        <div class="kpi"><div class="kpi-label">Posts Published</div><div class="kpi-value">22</div><div class="kpi-sub fl">Instagram + Facebook</div></div>
+        <div class="kpi"><div class="kpi-label">Post Impressions</div><div class="kpi-value">1,915</div><div class="kpi-sub fl">Both platforms</div></div>
+        <div class="kpi"><div class="kpi-label">Avg Engagement Rate</div><div class="kpi-value">14.9%</div><div class="kpi-sub up">Above category average</div></div>
+        <div class="kpi"><div class="kpi-label">Total Followers</div><div class="kpi-value">201</div><div class="kpi-sub dn">vs CC Young 5,802</div></div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-title">Engagement Breakdown</div>
+        <div class="bar-rows">
+          <div class="bar-item"><div class="bar-lbl" style="width:130px;">Reactions / Likes</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--red);"></div></div><div class="bar-val">99</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:130px;">Comments & Replies</div><div class="bar-track"><div class="bar-fill" style="width:14%;background:var(--dark);"></div></div><div class="bar-val">14</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:130px;">Video Views</div><div class="bar-track"><div class="bar-fill" style="width:40%;background:var(--gray);"></div></div><div class="bar-val">40</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:130px;">Shares</div><div class="bar-track"><div class="bar-fill" style="width:4%;background:#ccc;"></div></div><div class="bar-val">4</div></div>
+          <div class="bar-item"><div class="bar-lbl" style="width:130px;">Link Clicks</div><div class="bar-track"><div class="bar-fill" style="width:1%;background:#ccc;"></div></div><div class="bar-val">0</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Competitor Estimated Engagement</div>
+        <div class="comp-item"><span class="comp-name">CC Young</span><span class="comp-val">14.06</span></div>
+        <div class="comp-item"><span class="comp-name">Ventana by Buckner</span><span class="comp-val">3.73</span></div>
+        <div class="comp-item"><span class="comp-name">Clearwater Highland Park</span><span class="comp-val">1.56</span></div>
+        <div class="comp-item"><span class="comp-name">The Plaza at Edgemere</span><span class="comp-val">0.67</span></div>
+        <div class="comp-item"><span class="comp-name">Belmont Village</span><span class="comp-val">0.50</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Top Posts This Period</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Content Theme</th><th>Likes</th><th>Platform</th><th>Signal</th></tr></thead>
+          <tbody>
+            <tr><td>Construction progress &mdash; "getting closer" update</td><td>19</td><td>Instagram</td><td><span class="badge b-green">Best Performer</span></td></tr>
+            <tr><td>Dining &mdash; chef-prepared meals feature</td><td>15</td><td>Instagram</td><td><span class="badge b-green">Strong</span></td></tr>
+            <tr><td>Wellness &mdash; fitness and spa amenities</td><td>13</td><td>Instagram</td><td><span class="badge b-green">Strong</span></td></tr>
+            <tr><td>FAQ / Q&A &mdash; lifestyle and opening timeline</td><td>1</td><td>Facebook</td><td><span class="badge b-gray">Low reach</span></td></tr>
+            <tr><td>Renderings reveal &mdash; first look</td><td>1</td><td>Facebook</td><td><span class="badge b-gray">Low reach</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEO & SITE HEALTH -->
+  <div id="tab-seo" class="tab">
+    <div>
+      <div class="section-label">PageSpeed Insights &mdash; vivanteliving.com &mdash; May 12, 2026</div>
+      <div class="score-row">
+        <div class="score"><div class="score-num s-amber">64</div><div class="score-lbl">Performance</div></div>
+        <div class="score"><div class="score-num s-amber">85</div><div class="score-lbl">Accessibility</div></div>
+        <div class="score"><div class="score-num s-amber">73</div><div class="score-lbl">Best Practices</div></div>
+        <div class="score"><div class="score-num s-green">92</div><div class="score-lbl">SEO</div></div>
+      </div>
+      <div class="note" style="margin-top:12px;">Core Web Vitals: Passed (real user data). Lab test shows LCP 3.8s and Total Blocking Time 950ms on mobile — significant issues for a site receiving $35K/month in paid traffic.</div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-title">Critical Performance Issues</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Issue</th><th>Severity</th><th>Est. Savings</th></tr></thead>
+            <tbody>
+              <tr><td>Reduce unused JavaScript</td><td><span class="badge b-red">Critical</span></td><td>667 KiB</td></tr>
+              <tr><td>Minimize main-thread work</td><td><span class="badge b-red">Critical</span></td><td>4.9s blocked</td></tr>
+              <tr><td>Reduce JS execution time</td><td><span class="badge b-red">Critical</span></td><td>3.0s</td></tr>
+              <tr><td>Efficient cache lifetimes</td><td><span class="badge b-amber">Medium</span></td><td>205 KiB</td></tr>
+              <tr><td>Reduce unused CSS</td><td><span class="badge b-amber">Medium</span></td><td>57 KiB</td></tr>
+              <tr><td>Image delivery optimization</td><td><span class="badge b-amber">Medium</span></td><td>36 KiB</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Keyword Rankings &mdash; SEMrush</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Keyword</th><th>Pos.</th><th>Vol.</th></tr></thead>
+            <tbody>
+              <tr><td>vivante newport center</td><td><span class="badge b-green">#1</span></td><td>1,000</td></tr>
+              <tr><td>vivante newport mesa</td><td><span class="badge b-green">#1</span></td><td>720</td></tr>
+              <tr><td>vivante costa mesa</td><td><span class="badge b-green">#1</span></td><td>590</td></tr>
+              <tr><td>vivante newport beach</td><td><span class="badge b-green">#1</span></td><td>210</td></tr>
+              <tr><td>senior living newport beach</td><td><span class="badge b-green">#1</span></td><td>140</td></tr>
+              <tr><td>vivante</td><td><span class="badge b-gray">#2</span></td><td>1,300</td></tr>
+              <tr><td>assisted living orange county</td><td><span class="badge b-red">#26</span></td><td>880</td></tr>
+              <tr><td>assisted living in orange county</td><td><span class="badge b-red">#23</span></td><td>170</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Backlink Health</div>
+      <div class="kpi-3">
+        <div><div class="kpi-label">Total Backlinks</div><div class="kpi-value" style="font-size:22px;">5,286</div></div>
+        <div><div class="kpi-label">New Links (Period)</div><div class="kpi-value up" style="font-size:22px;">+719</div></div>
+        <div><div class="kpi-label">Lost Links (Period)</div><div class="kpi-value dn" style="font-size:22px;">−2,755</div></div>
+      </div>
+      <div class="note">Net loss of 2,036 links this period. Average authority score of new linking pages is 5/100. Outreach to senior living directories — A Place for Mom, Seniorly, Caring.com — would improve both authority and referral traffic.</div>
+    </div>
+  </div>
+
+  <!-- EARNED MEDIA -->
+  <div id="tab-earned" class="tab">
+    <div>
+      <div class="section-label">MuckRack Competitive Analysis &mdash; May 2025 to May 2026</div>
+      <div class="kpi-4">
+        <div class="kpi"><div class="kpi-label">Vivante TC Articles</div><div class="kpi-value">16</div><div class="kpi-sub dn">vs Atria 286, CC Young 177</div></div>
+        <div class="kpi"><div class="kpi-label">Vivante UVM</div><div class="kpi-value">369M</div><div class="kpi-sub up">Highest of 3 compared</div></div>
+        <div class="kpi"><div class="kpi-label">Listening Mentions</div><div class="kpi-value">11</div><div class="kpi-sub dn">&minus;21.4% vs prior period</div></div>
+        <div class="kpi"><div class="kpi-label">Potential Reach</div><div class="kpi-value">9.7M</div><div class="kpi-sub up">+15.7% vs prior period</div></div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="card-title">Article Volume vs Competitors</div>
+        <div class="chart-wrap"><canvas id="earnedChart"></canvas></div>
+        <div class="note">Despite having the highest UVM (369M), Vivante has earned only 16 articles. Coverage reaches large audiences when it lands — but frequency is critically low.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Listening — Top Authors</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Author</th><th>Platform</th><th>Reach</th><th>Engagements</th></tr></thead>
+            <tbody>
+              <tr><td><strong>dallaz95</strong></td><td>Reddit</td><td>1M</td><td><strong style="color:var(--red);">33</strong></td></tr>
+              <tr><td>@grok</td><td>X (Twitter)</td><td>8.6M</td><td>0</td></tr>
+              <tr><td>Mike Boyd / ConnectCRE</td><td>Online News</td><td>63.6K</td><td>0</td></tr>
+              <tr><td>press release</td><td>Blog</td><td>7.3K</td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:14px;">
+          <div class="card-title" style="margin-bottom:8px;">Top Themes in Coverage</div>
+          <div class="tag-cloud">
+            <div class="tag tag-red" style="font-size:15px;">vivante</div>
+            <div class="tag tag-dark" style="font-size:14px;">development</div>
+            <div class="tag tag-dark" style="font-size:14px;">living</div>
+            <div class="tag tag-dark">turtle creek</div>
+            <div class="tag tag-gray">cost</div>
+            <div class="tag tag-gray">area</div>
+            <div class="tag tag-gray">resistance</div>
+            <div class="tag tag-gray">clover tower</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALLYN ANALYSIS -->
+  <div id="tab-analysis" class="tab">
+    <div class="analyst">
+      <div class="analyst-label">Allyn Analyst Briefing &mdash; May 2026 &middot; Vivante Turtle Creek</div>
+      <div class="analyst-findings">
+
+        <div class="finding">
+          <div class="finding-title"><span class="finding-num">01</span>The Turtle Creek Page Is Your Most Urgent Fix</div>
+          <div class="finding-text">The /turtle-creek-new landing page — the primary pre-sales destination for the product being built — receives 499 sessions per month but converts at just <strong>0.20%</strong>, the lowest key event rate of any page on the site. The homepage converts at 3.34% by comparison. Visitors spending nearly a minute on that page are engaged but not taking action. <strong>This page needs a direct call to action, a newsletter signup or VIP interest form above the fold, and social proof content. Every dollar being spent building Turtle Creek awareness is landing on a page that fails to capture interest.</strong></div>
+        </div>
+
+        <div class="finding">
+          <div class="finding-title"><span class="finding-num">02</span>$22,768 Is Buying Leads the Brand Campaign Earns for $41</div>
+          <div class="finding-text">The OC Assisted Living Terms campaign converts at $364 per conversion — nearly 9× the Brand campaign's $41.63 rate. The Memory Care campaign converts at $660 on just 5 conversions. The keyword "memory care assisted living" spent $1,065 with zero conversions. YouTube Demand Gen, meanwhile, converts at $55 on 65 conversions and is largely overlooked. <strong>Reduce OC Assisted Living budget by $5,000–8,000/month, pause Memory Care pending restructure, and reinvest in YouTube Demand Gen.</strong></div>
+        </div>
+
+        <div class="finding">
+          <div class="finding-title"><span class="finding-num">03</span>Paid Social Is Clicking but Not Engaging</div>
+          <div class="finding-text">Paid Social drives 1,758 sessions but averages just <strong>7 seconds per session</strong> and a 33.2% engagement rate. Cross-network traffic is worse: 14 seconds average on 3,661 sessions. Organic Social, by contrast, has a 60.4% engagement rate — meaning people who find Vivante naturally are far more interested than those driven by paid campaigns. <strong>There is a clear mismatch between ad creative and landing page experience. Review targeting and landing page alignment for all Meta campaigns.</strong></div>
+        </div>
+
+        <div class="finding">
+          <div class="finding-title"><span class="finding-num">04</span>SEO Is Dominant on Brand, Invisible on Generics</div>
+          <div class="finding-text">Vivante holds #1 for every branded keyword. But "assisted living orange county" (880 monthly searches) ranks at #26, and "assisted living huntington beach ca" has no ranking at all — yet both are being bid on at $15–18 CPC. <strong>The site is paying to rank for terms it should own organically.</strong> Dedicated location landing pages and directory link acquisition from A Place for Mom, Seniorly and Caring.com would reduce this dependency within 3–6 months. The net loss of 2,036 backlinks this period compounds the problem over time.</div>
+        </div>
+
+        <div class="finding">
+          <div class="finding-title"><span class="finding-num">05</span>Mobile Performance Is Sending Paid Traffic to a Slow Page</div>
+          <div class="finding-text">Mobile Performance score is 64 with 950ms Total Blocking Time and 3.8s LCP in lab conditions. There are 667 KiB of unused JavaScript and 17 long main-thread tasks. <strong>This is a material issue when $35,500/month in paid traffic is arriving largely on mobile. A developer spending 2–3 days on JS cleanup, image optimization and caching could meaningfully improve both Quality Score in Google Ads and on-page conversion rates.</strong></div>
+        </div>
+
+        <div class="finding">
+          <div class="finding-title"><span class="finding-num">06</span>Earned Media Is Underleveraged Given Vivante's UVM Position</div>
+          <div class="finding-text">Only 16 press articles in 13 months against CC Young's 177 and Atria's 286 — yet Vivante's UVM of 369M is the highest of the three. Coverage, when it lands, reaches more people than competitors' coverage. <strong>The project downsizing story is already in circulation and driving the only anger-coded social signals. Proactive press outreach around the updated 15-story design and construction commencement should begin now, not after ground is broken.</strong> The r/Dallasdevelopment community generated 33 of 35 total listening engagements and is an underutilized direct-engagement channel.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<div class="footer">
+  <div class="footer-left">Confidential &mdash; prepared by <span>Allyn</span> for Vivante &middot; May 2026 &middot; <span>allynmedia.com</span></div>
+  <div class="footer-right">Media Intelligence &middot; Monthly Report</div>
+</div>
+
+<script>
+// ── TAB SWITCHING ──
+function showTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  // Init charts lazily
+  if (name === 'overview' && !window.campaignChartDone) initOverviewCharts();
+  if (name === 'website' && !window.channelChartDone) initWebsiteCharts();
+  if (name === 'paid' && !window.convChartDone) initPaidCharts();
+  if (name === 'earned' && !window.earnedChartDone) initEarnedCharts();
+}
+
+// ── CHART DEFAULTS ──
+Chart.defaults.font.family = "'Barlow', sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#888A8D';
+
+// ── OVERVIEW CHARTS ──
+function initOverviewCharts() {
+  window.campaignChartDone = true;
+  new Chart(document.getElementById('campaignChart'), {
+    type: 'bar',
+    data: {
+      labels: ['OC Assisted Living', 'Brand Search', 'YouTube Conv.', 'Memory Care', 'YT Awareness'],
+      datasets: [{
+        label: 'Spend ($)',
+        data: [22768, 5183, 3591, 3302, 652],
+        backgroundColor: ['#CE202E', '#1a1a1a', '#888A8D', '#888A8D', '#ccc'],
+        borderRadius: 3,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxRotation: 30 } },
+        y: { grid: { color: '#f5f5f5' }, ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K' } }
+      }
+    }
+  });
+}
+
+// ── WEBSITE CHARTS ──
+function initWebsiteCharts() {
+  window.channelChartDone = true;
+  new Chart(document.getElementById('channelChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Paid Search', 'Organic Search', 'Cross-network', 'Direct', 'Paid Social', 'Other'],
+      datasets: [{
+        data: [5190, 3900, 3661, 2259, 1758, 522],
+        backgroundColor: ['#CE202E', '#1a1a1a', '#888A8D', '#aaaaaa', '#cccccc', '#e0e0e0'],
+        borderWidth: 0,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '60%',
+      plugins: {
+        legend: { position: 'right', labels: { boxWidth: 10, padding: 12 } }
+      }
+    }
+  });
+}
+
+// ── PAID CHARTS ──
+function initPaidCharts() {
+  window.convChartDone = true;
+  new Chart(document.getElementById('convChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Brand', 'YT Conv.', 'OC Assist.', 'Mem. Care'],
+      datasets: [
+        {
+          label: 'Spend ($K)',
+          data: [5.2, 3.6, 22.8, 3.3],
+          backgroundColor: 'rgba(206,32,46,0.15)',
+          borderColor: '#CE202E',
+          borderWidth: 1.5,
+          borderRadius: 3,
+          yAxisID: 'y',
+        },
+        {
+          label: 'Conversions',
+          data: [124.5, 65, 62.5, 5],
+          backgroundColor: '#1a1a1a',
+          borderRadius: 3,
+          yAxisID: 'y1',
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { boxWidth: 10, padding: 12 } } },
+      scales: {
+        y: { grid: { color: '#f5f5f5' }, ticks: { callback: v => '$' + v + 'K' }, position: 'left' },
+        y1: { grid: { display: false }, position: 'right' },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+}
+
+// ── EARNED CHART ──
+function initEarnedCharts() {
+  window.earnedChartDone = true;
+  new Chart(document.getElementById('earnedChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Atria Senior Living', 'CC Young', 'Vivante Turtle Creek'],
+      datasets: [{
+        label: 'Articles (May 2025–May 2026)',
+        data: [286, 177, 16],
+        backgroundColor: ['#888A8D', '#1a1a1a', '#CE202E'],
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: '#f5f5f5' } }
+      }
+    }
+  });
+}
+
+// Init overview on load
+window.addEventListener('load', () => {
+  initOverviewCharts();
+});
+</script>
+</body>
+</html>
