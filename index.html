@@ -197,88 +197,148 @@ tr:hover td{background:#fafafa;}
 
 /* ─── PRINT / PDF STYLES ─── */
 @media print {
-  /* Hide chrome */
+  /* ── Hide all browser chrome ── */
   .site-header,
   .site-nav,
   .print-btn,
   .site-footer { display: none !important; }
 
-  /* Show only the active report page */
+  /* ── Only print the active tab ── */
   .page { display: none !important; }
   .page.active { display: block !important; }
 
-  /* Reset body */
+  /* ── Page setup ── */
+  @page {
+    margin: 14mm 14mm 14mm 14mm;
+    size: letter;
+  }
+
+  /* ── Body reset ── */
   body {
     background: #fff !important;
-    font-size: 11pt;
+    font-size: 10pt;
     color: #111;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  /* Report body — full width, no max-width constraint */
+  /* ── Cover: keep entirely on first page, no extra padding ── */
+  .report-cover {
+    padding: 16pt 0 16pt !important;
+    border-bottom: 1px solid #e2e2e2 !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  .cover-eyebrow { margin-bottom: 6pt !important; }
+  .cover-headline { font-size: 24pt !important; margin-bottom: 4pt !important; }
+  .cover-sub { font-size: 9pt !important; margin-bottom: 0 !important; }
+
+  /* ── Cover metrics: 4-col, compact ── */
+  .cover-metrics {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6pt !important;
+    margin-top: 14pt !important;
+  }
+
+  .cm { padding: 8pt 10pt !important; }
+  .cm-val { font-size: 20pt !important; }
+  .cm-label { font-size: 8pt !important; margin-bottom: 2pt !important; }
+  .cm-delta { font-size: 8pt !important; margin-top: 2pt !important; }
+
+  /* ── Report body: flush, no extra padding ── */
   .report-body {
     max-width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
   }
 
-  /* Cover section */
-  .report-cover {
-    padding: 24pt 0 20pt !important;
-    border-bottom: 1px solid #e2e2e2 !important;
-    page-break-after: avoid;
+  /* ── Sections: allow breaks between them, not within ── */
+  .report-section {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-top: 16pt !important;
+    padding-top: 16pt !important;
   }
 
-  .cover-headline { font-size: 28pt !important; }
-
-  /* Keep cover metrics as 4 columns */
-  .cover-metrics {
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 8pt !important;
+  .report-section:first-child {
+    margin-top: 0 !important;
+    padding-top: 14pt !important;
+    break-before: avoid !important;
+    page-break-before: avoid !important;
   }
 
-  /* Sections */
-  .report-section { page-break-inside: avoid; }
-  .report-section:first-child { margin-top: 0; padding-top: 20pt; }
+  /* ── Let long sections (recs, risks) break between items ── */
+  .rec-list, .risk-grid { break-inside: auto !important; page-break-inside: auto !important; }
+  .rec-item { break-inside: avoid !important; page-break-inside: avoid !important; }
+  .risk-card { break-inside: avoid !important; page-break-inside: avoid !important; }
 
-  /* Keep 2-col splits */
-  .split { grid-template-columns: 1fr 1fr !important; gap: 16pt !important; }
-  .split-3-2 { grid-template-columns: 3fr 2fr !important; gap: 16pt !important; }
-  .risk-grid { grid-template-columns: 1fr 1fr !important; gap: 12pt !important; }
-  .data-grid-2 { grid-template-columns: 1fr 1fr !important; gap: 12pt !important; }
-  .data-grid-4 { grid-template-columns: repeat(4, 1fr) !important; gap: 8pt !important; }
+  /* ── 2-col layouts ── */
+  .split { grid-template-columns: 1fr 1fr !important; gap: 12pt !important; }
+  .split-3-2 { grid-template-columns: 3fr 2fr !important; gap: 12pt !important; }
+  .risk-grid { grid-template-columns: 1fr 1fr !important; gap: 10pt !important; }
+  .data-grid-2 { grid-template-columns: 1fr 1fr !important; gap: 10pt !important; }
+  .data-grid-4 { grid-template-columns: repeat(4, 1fr) !important; gap: 6pt !important; }
 
-  /* Cards */
-  .data-card, .rec-item, .risk-card, .kpi, .cm {
-    break-inside: avoid;
+  /* ── Cards ── */
+  .data-card {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
     box-shadow: none !important;
   }
 
-  /* Rec items */
-  .rec-list { gap: 10pt !important; }
-
-  /* Typography */
-  .section-title { font-size: 20pt !important; }
-  .prose, .prose-wide { font-size: 10pt !important; line-height: 1.55 !important; }
-  .rec-text { font-size: 9.5pt !important; line-height: 1.55 !important; }
-  .rec-title { font-size: 11pt !important; }
-
-  /* Charts — freeze at current size */
-  .ch-wrap { height: 140pt !important; }
-  .ch-wrap-sm { height: 110pt !important; }
-
-  /* Pull quote */
-  .pull-quote { page-break-inside: avoid; }
-
-  /* Page breaks before major sections */
-  .report-section + .report-section { page-break-before: auto; }
-
-  /* Print page margins */
-  @page {
-    margin: 16mm 14mm 16mm 14mm;
-    size: letter;
+  .kpi, .cm {
+    break-inside: avoid !important;
+    box-shadow: none !important;
   }
+
+  /* ── Typography ── */
+  .section-number { font-size: 8pt !important; margin-bottom: 3pt !important; }
+  .section-title { font-size: 18pt !important; margin-bottom: 10pt !important; }
+  .prose, .prose-wide { font-size: 9.5pt !important; line-height: 1.5 !important; }
+  .prose p, .prose-wide p { margin-bottom: 8pt !important; }
+  .rec-text { font-size: 9pt !important; line-height: 1.5 !important; }
+  .rec-title { font-size: 10.5pt !important; margin-bottom: 3pt !important; }
+  .rec-flag { font-size: 8pt !important; margin-bottom: 4pt !important; }
+  .rec-num { font-size: 16pt !important; }
+  .rec-item { padding: 10pt 12pt !important; gap: 10pt !important; }
+  .rec-list { gap: 8pt !important; margin-bottom: 16pt !important; }
+
+  /* ── Tier labels ── */
+  .tier-label { margin-top: 14pt !important; margin-bottom: 8pt !important; font-size: 8pt !important; }
+
+  /* ── Pull quote ── */
+  .pull-quote {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    padding: 8pt 14pt !important;
+    margin: 12pt 0 !important;
+  }
+  .pq-text { font-size: 10pt !important; }
+
+  /* ── Charts ── */
+  .ch-wrap { height: 130pt !important; }
+  .ch-wrap-sm { height: 100pt !important; }
+
+  /* ── Tags ── */
+  .tag-cloud { gap: 4pt !important; margin-top: 8pt !important; }
+  .tag { padding: 3pt 8pt !important; font-size: 9pt !important; }
+
+  /* ── Notes ── */
+  .note { font-size: 8.5pt !important; padding: 6pt 10pt !important; margin-top: 8pt !important; }
+
+  /* ── Comp items ── */
+  .comp-item { padding: 5pt 8pt !important; font-size: 10pt !important; margin-bottom: 4pt !important; }
+
+  /* ── Risk/opp cards ── */
+  .risk-item { font-size: 9pt !important; padding: 5pt 0 !important; }
+  .risk-label { font-size: 8pt !important; margin-bottom: 6pt !important; }
+  .risk-card { padding: 10pt 12pt !important; }
 }
 </style>
 </head>
