@@ -7,7 +7,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js">
+function printReport() {
+  // Ensure charts are rendered before printing
+  window.print();
+}
+</script>
 <style>
 :root {
   --red: #CE202E;
@@ -166,6 +171,115 @@ tr:hover td{background:#fafafa;}
 .sf-left{font-size:12px;color:var(--gray);}
 .sf-left span{color:var(--red);}
 .sf-right{font-family:var(--condensed);font-weight:500;font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;}
+
+/* ─── PRINT BUTTON ─── */
+.print-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+  flex-shrink: 0;
+}
+.print-btn:hover { background: #a8181f; }
+.print-btn:active { transform: scale(.97); }
+.print-btn svg { flex-shrink: 0; }
+
+/* ─── PRINT / PDF STYLES ─── */
+@media print {
+  /* Hide chrome */
+  .site-header,
+  .site-nav,
+  .print-btn,
+  .site-footer { display: none !important; }
+
+  /* Show only the active report page */
+  .page { display: none !important; }
+  .page.active { display: block !important; }
+
+  /* Reset body */
+  body {
+    background: #fff !important;
+    font-size: 11pt;
+    color: #111;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Report body — full width, no max-width constraint */
+  .report-body {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Cover section */
+  .report-cover {
+    padding: 24pt 0 20pt !important;
+    border-bottom: 1px solid #e2e2e2 !important;
+    page-break-after: avoid;
+  }
+
+  .cover-headline { font-size: 28pt !important; }
+
+  /* Keep cover metrics as 4 columns */
+  .cover-metrics {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8pt !important;
+  }
+
+  /* Sections */
+  .report-section { page-break-inside: avoid; }
+  .report-section:first-child { margin-top: 0; padding-top: 20pt; }
+
+  /* Keep 2-col splits */
+  .split { grid-template-columns: 1fr 1fr !important; gap: 16pt !important; }
+  .split-3-2 { grid-template-columns: 3fr 2fr !important; gap: 16pt !important; }
+  .risk-grid { grid-template-columns: 1fr 1fr !important; gap: 12pt !important; }
+  .data-grid-2 { grid-template-columns: 1fr 1fr !important; gap: 12pt !important; }
+  .data-grid-4 { grid-template-columns: repeat(4, 1fr) !important; gap: 8pt !important; }
+
+  /* Cards */
+  .data-card, .rec-item, .risk-card, .kpi, .cm {
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+
+  /* Rec items */
+  .rec-list { gap: 10pt !important; }
+
+  /* Typography */
+  .section-title { font-size: 20pt !important; }
+  .prose, .prose-wide { font-size: 10pt !important; line-height: 1.55 !important; }
+  .rec-text { font-size: 9.5pt !important; line-height: 1.55 !important; }
+  .rec-title { font-size: 11pt !important; }
+
+  /* Charts — freeze at current size */
+  .ch-wrap { height: 140pt !important; }
+  .ch-wrap-sm { height: 110pt !important; }
+
+  /* Pull quote */
+  .pull-quote { page-break-inside: avoid; }
+
+  /* Page breaks before major sections */
+  .report-section + .report-section { page-break-before: auto; }
+
+  /* Print page margins */
+  @page {
+    margin: 16mm 14mm 16mm 14mm;
+    size: letter;
+  }
+}
 </style>
 </head>
 <body>
@@ -178,9 +292,15 @@ tr:hover td{background:#fafafa;}
       <div class="logo-product">Insights</div>
     </div>
   </div>
-  <div>
-    <div class="hc-name">Vivante Turtle Creek</div>
-    <div class="hc-period">Monthly Intelligence Report &mdash; May 2026</div>
+  <div style="display:flex;align-items:center;gap:20px;">
+    <div style="text-align:right;">
+      <div class="hc-name">Vivante Turtle Creek</div>
+      <div class="hc-period">Monthly Intelligence Report &mdash; May 2026</div>
+    </div>
+    <button class="print-btn" onclick="printReport()" title="Download as PDF">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download PDF
+    </button>
   </div>
 </header>
 <div class="red-bar"></div>
@@ -824,6 +944,11 @@ function initChannelChart() {
       plugins: { legend: { position: 'right', labels: { boxWidth: 10, padding: 10 } } }
     }
   });
+}
+
+function printReport() {
+  // Ensure charts are rendered before printing
+  window.print();
 }
 </script>
 </body>
