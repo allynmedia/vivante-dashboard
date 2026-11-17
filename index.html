@@ -3,10 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dallas YMCA Turkey Trot 2026 — Meta Ads Progress Report</title>
+<title>Vivante Turtle Creek — Allyn Insights | May 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js">
+function printReport() {
+  // Ensure charts are rendered before printing
+  window.print();
+}
+</script>
 <style>
 :root {
   --red: #CE202E;
@@ -25,126 +31,314 @@
 html{scroll-behavior:smooth;}
 body{font-family:var(--body);background:var(--gray-light);color:var(--dark);font-size:15px;line-height:1.6;}
 
-.site-header{background:var(--dark);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;box-shadow:0 2px 16px rgba(0,0,0,.5);position:sticky;top:0;z-index:10;}
+.site-header{background:var(--dark);padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;height:60px;box-shadow:0 2px 16px rgba(0,0,0,.5);}
 .logo-row{display:flex;align-items:center;gap:13px;}
-.allyn-bug-img{width:36px;height:36px;flex-shrink:0;display:block;}
+.allyn-bug{width:36px;height:36px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#fff;letter-spacing:-.5px;flex-shrink:0;}
 .logo-text{font-family:var(--condensed);font-weight:500;font-size:15px;color:#fff;text-transform:uppercase;letter-spacing:.08em;}
+.logo-product{font-size:11px;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-top:1px;}
 .hc-name{font-family:var(--condensed);font-weight:500;font-size:18px;color:#fff;text-align:right;}
 .hc-period{font-size:12px;color:var(--gray);text-align:right;}
 .red-bar{height:3px;background:var(--red);}
-@media(max-width:640px){.site-header{padding:10px 16px;flex-wrap:wrap;height:auto;gap:8px;}}
 
-.print-btn{display:inline-flex;align-items:center;gap:7px;background:var(--red);color:#fff;border:none;border-radius:5px;padding:8px 16px;font-family:var(--body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;cursor:pointer;transition:background .15s,transform .1s;flex-shrink:0;}
-.print-btn:hover{background:#a8181f;}
-.print-btn:active{transform:scale(.97);}
+.site-nav{background:var(--white);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;position:sticky;top:60px;z-index:199;}
+.site-nav::-webkit-scrollbar{display:none;}
+.nav-btn{padding:13px 20px;font-family:var(--body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;border:none;background:transparent;cursor:pointer;color:var(--gray);border-bottom:3px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;}
+.nav-btn:hover{color:var(--dark);}
+.nav-btn.active{color:var(--red);border-bottom-color:var(--red);}
+.nav-star{color:var(--red);margin-right:3px;}
 
-.report-cover{background:var(--white);padding:40px 40px 32px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
-@media(max-width:600px){.report-cover{padding:28px 16px 24px;}}
-.cover-logo{width:64px;height:64px;display:block;margin-bottom:18px;}
+.page{display:none;}
+.page.active{display:block;}
+
+.report-cover{background:var(--white);padding:40px 40px 32px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}@media(max-width:600px){.report-cover{padding:28px 16px 24px;}}
+.report-cover::before{display:none;}
 .cover-eyebrow{font-family:var(--condensed);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--red);margin-bottom:12px;}
-.cover-headline{font-family:var(--condensed);font-weight:500;font-size:40px;color:var(--dark);line-height:1.1;letter-spacing:.01em;margin-bottom:8px;}
-.cover-sub{font-size:15px;color:var(--gray);}
+.cover-headline{font-family:var(--condensed);font-weight:500;font-size:42px;color:var(--dark);line-height:1.1;letter-spacing:.01em;margin-bottom:8px;}
+.cover-sub{font-size:15px;color:var(--gray);margin-bottom:0;}
 .cover-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px;}
-.cm{background:var(--white);border:.5px solid var(--border);border-radius:8px;padding:12px 16px;position:relative;overflow:hidden;}
-.cm::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);}
+.cm{background:var(--white);border:.5px solid var(--border);border-radius:8px;padding:12px 16px;position:relative;overflow:hidden;}.cm::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);}
 .cm-val{font-family:var(--condensed);font-weight:500;font-size:26px;color:var(--dark);line-height:1;}
 .cm-label{font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
 .cm-delta{font-size:12px;margin-top:3px;}
-@media(max-width:800px){.cover-metrics{grid-template-columns:1fr 1fr;}}
 
-.report-body{max-width:1100px;margin:0 auto;padding:0 32px 48px;}
-@media(max-width:600px){.report-body{padding:0 16px 40px;}}
+.report-body{max-width:1100px;margin:0 auto;padding:0 32px 48px;}@media(max-width:600px){.report-body{padding:0 16px 40px;}}
+
 .report-section{padding:40px 0 0;border-top:1px solid var(--border);margin-top:40px;}
-.report-section:first-child{border-top:none;margin-top:0;}
+.report-section:first-child{border-top:none;margin-top:0;padding-top:40px;}
 .section-number{font-family:var(--condensed);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--red);margin-bottom:6px;}
 .section-title{font-family:var(--condensed);font-weight:500;font-size:28px;color:var(--dark);letter-spacing:.01em;margin-bottom:20px;line-height:1.15;}
 
+.prose{font-size:15px;line-height:1.75;color:#333;max-width:720px;}
+.prose p{margin-bottom:16px;}
+.prose p:last-child{margin-bottom:0;}
+.prose strong{color:var(--dark);font-weight:700;}
 .prose-wide{font-size:15px;line-height:1.75;color:#333;}
 .prose-wide p{margin-bottom:16px;}
 .prose-wide p:last-child{margin-bottom:0;}
 .prose-wide strong{color:var(--dark);font-weight:700;}
 
-.split{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px;align-items:start;}
-@media(max-width:800px){.split{grid-template-columns:1fr;}}
+.pull-quote{border-left:4px solid var(--red);padding:14px 20px;margin:24px 0;background:var(--red-light);border-radius:0 6px 6px 0;}
+.pq-text{font-size:16px;font-weight:700;color:var(--dark);line-height:1.5;}
 
-.data-card{background:var(--white);border:.5px solid var(--border);border-radius:8px;padding:18px 20px;margin-top:20px;}
-.split .data-card{margin-top:0;}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:24px;align-items:start;}
+.split-3-2{display:grid;grid-template-columns:3fr 2fr;gap:32px;margin-top:24px;align-items:start;}
+@media(max-width:800px){.split,.split-3-2{grid-template-columns:1fr 1fr;}.cover-metrics{grid-template-columns:1fr 1fr;}}@media(max-width:500px){.split,.split-3-2,.cover-metrics{grid-template-columns:1fr 1fr;}}
+
+.data-card{background:var(--white);border:.5px solid var(--border);border-radius:8px;padding:18px 20px;}
 .dc-title{font-family:var(--condensed);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:7px;}
 .dc-title::before{content:'';display:inline-block;width:7px;height:7px;background:var(--red);flex-shrink:0;}
 
 .bar-rows{display:flex;flex-direction:column;gap:9px;}
 .bi{display:flex;align-items:center;gap:10px;}
-.bl{font-size:13px;color:#444;flex-shrink:0;width:150px;}
+.bl{font-size:13px;color:#444;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .bt{flex:1;height:8px;background:#f0f0f0;border-radius:4px;overflow:hidden;}
 .bf{height:100%;border-radius:4px;}
-.bv{font-size:13px;font-weight:700;color:var(--dark);text-align:right;flex-shrink:0;min-width:64px;}
+.bv{font-size:13px;font-weight:700;color:var(--dark);text-align:right;flex-shrink:0;min-width:56px;}
 
 .kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px;}
 @media(max-width:800px){.kpi-strip{grid-template-columns:repeat(2,1fr);}}
 .kpi{background:var(--white);border:.5px solid var(--border);border-radius:8px;padding:14px 16px;position:relative;overflow:hidden;}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);}
 .kpi-label{font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;}
-.kpi-value{font-family:var(--condensed);font-weight:500;font-size:26px;line-height:1;color:var(--dark);}
+.kpi-value{font-family:var(--condensed);font-weight:500;font-size:28px;line-height:1;color:var(--dark);}
 .kpi-sub{font-size:12px;margin-top:4px;}
-.fl{color:var(--gray);}
+.up{color:var(--green);}.dn{color:var(--red);}.fl{color:var(--gray);}.warn{color:var(--amber);}
 
-.tbl-wrap{overflow-x:auto;}
+.tbl-wrap{overflow-x:auto;margin-top:16px;}
 table{width:100%;border-collapse:collapse;font-size:13px;}
-th{text-align:left;padding:7px 10px;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:11px;border-bottom:1.5px solid var(--border);}
-td{padding:8px 10px;border-bottom:.5px solid #f2f2f0;vertical-align:top;}
-td.num,th.num{text-align:right;}
+th{text-align:left;padding:7px 10px;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1.5px solid var(--border);white-space:nowrap;}
+td{padding:8px 10px;border-bottom:.5px solid #f2f2f0;}
 tr:last-child td{border-bottom:none;}
-tr.total td{font-weight:700;border-top:1.5px solid var(--border);}
-thead{display:table-header-group;}
-.tbl-cap{font-size:12px;color:var(--gray);margin-top:10px;line-height:1.5;}
+tr:hover td{background:#fafafa;}
 
 .badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:700;white-space:nowrap;}
 .b-green{background:#e6f4ec;color:var(--green);}
+.b-red{background:var(--red-light);color:var(--red);}
 .b-amber{background:#fef3e2;color:var(--amber);}
 .b-gray{background:#f0f0f0;color:var(--gray);}
 
-.rec-list{display:flex;flex-direction:column;gap:12px;margin-top:20px;}
-.rec-item{display:flex;gap:16px;background:var(--white);border:.5px solid var(--border);border-radius:8px;padding:16px 18px;}
-.rec-num{font-family:var(--condensed);font-weight:500;font-size:24px;color:var(--red);line-height:1;flex-shrink:0;width:32px;}
-.rec-body{font-size:14px;line-height:1.6;color:#333;}
-.rec-body strong{color:var(--dark);}
+.comp-item{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:#f9f9f9;border-radius:6px;border:.5px solid #eee;margin-bottom:6px;font-size:13px;}
+.comp-item:last-child{margin-bottom:0;}
+.comp-item.hl{border-color:var(--red);background:var(--red-light);font-weight:700;color:var(--red);}
 
-.note{font-size:13px;color:var(--gray);line-height:1.6;margin-top:14px;padding:10px 14px;background:#f9f9f9;border-radius:5px;border-left:3px solid var(--red);}
+.ch-wrap{position:relative;height:220px;}
+.ch-wrap-sm{position:relative;height:170px;}
 
-.site-footer{background:var(--dark);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;margin-top:48px;gap:16px;flex-wrap:wrap;}
+.rec-list{display:flex;flex-direction:column;gap:16px;margin-top:8px;}
+.tier-label{font-family:var(--condensed);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.14em;color:var(--red);padding:6px 0;border-bottom:2px solid var(--red);margin-bottom:14px;margin-top:28px;}
+.rec-item{display:flex;gap:16px;padding:18px 20px;background:var(--white);border:.5px solid var(--border);border-radius:8px;border-left:4px solid var(--red);}@media(max-width:500px){.rec-item{padding:14px 16px;}}
+.rec-num{font-family:var(--condensed);font-weight:500;font-size:22px;color:var(--red);flex-shrink:0;width:28px;padding-top:1px;}
+.rec-title{font-family:var(--condensed);font-weight:500;font-size:16px;text-transform:uppercase;letter-spacing:.04em;color:var(--dark);margin-bottom:6px;}
+.rec-text{font-size:14px;color:#444;line-height:1.7;}
+.rec-text strong{color:var(--dark);font-weight:700;}
+.rec-flag{display:inline-flex;align-items:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:3px 8px;border-radius:3px;margin-bottom:7px;}
+.flag-urgent{background:var(--red-light);color:var(--red);}
+.flag-near{background:#fef3e2;color:var(--amber);}
+.flag-ongoing{background:#f0f0f0;color:var(--gray);}
+
+.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+@media(max-width:480px){.risk-grid{grid-template-columns:1fr 1fr;}}
+.risk-card{background:var(--white);border:.5px solid var(--border);border-radius:8px;padding:16px 18px;}
+.risk-card.risk{border-top:3px solid var(--red);}
+.risk-card.opp{border-top:3px solid var(--green);}
+.risk-label{font-family:var(--condensed);font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:500;margin-bottom:10px;}
+.risk-label.r{color:var(--red);}
+.risk-label.o{color:var(--green);}
+.risk-item{font-size:13px;color:#444;padding:7px 0;border-bottom:.5px solid #f5f5f5;line-height:1.55;}
+.risk-item:last-child{border-bottom:none;}
+.risk-item strong{color:var(--dark);}
+
+.score-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px;}@media(max-width:600px){.score-row{grid-template-columns:1fr 1fr;}}
+.score{background:var(--white);border:.5px solid var(--border);border-radius:8px;padding:16px;flex:1;text-align:center;}
+.score-num{font-family:var(--condensed);font-weight:500;font-size:38px;line-height:1;}
+.score-lbl{font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;}
+.s-green{color:var(--green);}.s-amber{color:var(--amber);}.s-red{color:var(--red);}
+
+.tag-cloud{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;}
+.tag{padding:5px 12px;border-radius:4px;font-weight:700;color:#fff;font-size:13px;}
+.t-red{background:var(--red);}
+.t-dark{background:var(--dark);}
+.t-gray{background:var(--gray);font-size:12px;}
+
+.note{font-size:13px;color:var(--gray);line-height:1.6;margin-top:12px;padding:10px 14px;background:#f9f9f9;border-radius:5px;border-left:3px solid var(--red);}
+
+.data-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+@media(max-width:900px){.data-grid-4{grid-template-columns:repeat(2,1fr);}}
+.data-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:420px){.data-grid-2{grid-template-columns:1fr 1fr;}}
+
+.site-footer{background:var(--dark);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;margin-top:48px;}
 .sf-left{font-size:12px;color:var(--gray);}
 .sf-left span{color:var(--red);}
 .sf-right{font-family:var(--condensed);font-weight:500;font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;}
 
+/* ─── PRINT BUTTON ─── */
+.print-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+  flex-shrink: 0;
+}
+.print-btn:hover { background: #a8181f; }
+.print-btn:active { transform: scale(.97); }
+.print-btn svg { flex-shrink: 0; }
+
+/* ─── PRINT / PDF STYLES ─── */
 @media print {
-  .site-header, .site-footer, .print-btn, .red-bar { display:none !important; }
-  @page { margin: 12mm; size: letter; }
-  body { background:#fff !important; font-size:10pt; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  .report-cover { padding:0 0 14pt !important; }
-  .cover-logo { width:44pt; height:44pt; margin-bottom:10pt; }
-  .cover-headline { font-size:24pt !important; }
-  .cover-sub { font-size:9pt !important; }
-  .cover-metrics { grid-template-columns:repeat(3,1fr) !important; gap:6pt !important; margin-top:12pt !important; }
-  .cm-val { font-size:18pt !important; }
-  .cm-label, .cm-delta { font-size:7.5pt !important; }
-  .report-body { max-width:100% !important; padding:0 !important; }
-  .report-section { margin-top:14pt !important; padding-top:14pt !important; }
-  .section-number, .section-title { break-after:avoid; }
-  .section-title { font-size:17pt !important; margin-bottom:10pt !important; }
-  .prose-wide { font-size:9.5pt !important; line-height:1.5 !important; }
-  .prose-wide p { margin-bottom:7pt !important; }
-  .split { grid-template-columns:1fr 1fr !important; gap:10pt !important; }
-  .kpi-strip { grid-template-columns:repeat(3,1fr) !important; gap:6pt !important; }
-  .kpi-value { font-size:18pt !important; }
-  .kpi-label, .kpi-sub { font-size:7.5pt !important; }
-  .data-card, .kpi, .cm, .rec-item, .note { break-inside:avoid; box-shadow:none !important; }
-  tr { break-inside:avoid; }
-  table { font-size:8pt !important; }
-  th { font-size:7pt !important; }
-  th, td { padding:4pt 5pt !important; white-space:normal !important; }
-  .tbl-cap, .note { font-size:8pt !important; }
-  .rec-body { font-size:9pt !important; }
-  .rec-item { padding:8pt 10pt !important; }
+  /* ── Hide all browser chrome ── */
+  .site-header,
+  .site-nav,
+  .print-btn,
+  .site-footer { display: none !important; }
+
+  /* ── Only print the active tab ── */
+  .page { display: none !important; }
+  .page.active { display: block !important; }
+
+  /* ── Page setup ── */
+  @page {
+    margin: 14mm 14mm 14mm 14mm;
+    size: letter;
+  }
+
+  /* ── Body reset ── */
+  body {
+    background: #fff !important;
+    font-size: 10pt;
+    color: #111;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ── Cover: keep entirely on first page, no extra padding ── */
+  .report-cover {
+    padding: 16pt 0 16pt !important;
+    border-bottom: 1px solid #e2e2e2 !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  .cover-eyebrow { margin-bottom: 6pt !important; }
+  .cover-headline { font-size: 24pt !important; margin-bottom: 4pt !important; }
+  .cover-sub { font-size: 9pt !important; margin-bottom: 0 !important; }
+
+  /* ── Cover metrics: 4-col, compact ── */
+  .cover-metrics {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6pt !important;
+    margin-top: 14pt !important;
+  }
+
+  .cm { padding: 8pt 10pt !important; }
+  .cm-val { font-size: 20pt !important; }
+  .cm-label { font-size: 8pt !important; margin-bottom: 2pt !important; }
+  .cm-delta { font-size: 8pt !important; margin-top: 2pt !important; }
+
+  /* ── Report body: flush, no extra padding ── */
+  .report-body {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* ── Sections: allow breaks between them, not within ── */
+  .report-section {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-top: 16pt !important;
+    padding-top: 16pt !important;
+  }
+
+  .report-section:first-child {
+    margin-top: 0 !important;
+    padding-top: 14pt !important;
+    break-before: avoid !important;
+    page-break-before: avoid !important;
+  }
+
+  /* ── Let long sections (recs, risks) break between items ── */
+  .rec-list, .risk-grid { break-inside: auto !important; page-break-inside: auto !important; }
+  .rec-item { break-inside: avoid !important; page-break-inside: avoid !important; }
+  .risk-card { break-inside: avoid !important; page-break-inside: avoid !important; }
+
+  /* ── 2-col layouts ── */
+  .split { grid-template-columns: 1fr 1fr !important; gap: 12pt !important; }
+  .split-3-2 { grid-template-columns: 3fr 2fr !important; gap: 12pt !important; }
+  .risk-grid { grid-template-columns: 1fr 1fr !important; gap: 10pt !important; }
+  .data-grid-2 { grid-template-columns: 1fr 1fr !important; gap: 10pt !important; }
+  .data-grid-4 { grid-template-columns: repeat(4, 1fr) !important; gap: 6pt !important; }
+
+  /* ── Cards ── */
+  .data-card {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    box-shadow: none !important;
+  }
+
+  .kpi, .cm {
+    break-inside: avoid !important;
+    box-shadow: none !important;
+  }
+
+  /* ── Typography ── */
+  .section-number { font-size: 8pt !important; margin-bottom: 3pt !important; }
+  .section-title { font-size: 18pt !important; margin-bottom: 10pt !important; }
+  .prose, .prose-wide { font-size: 9.5pt !important; line-height: 1.5 !important; }
+  .prose p, .prose-wide p { margin-bottom: 8pt !important; }
+  .rec-text { font-size: 9pt !important; line-height: 1.5 !important; }
+  .rec-title { font-size: 10.5pt !important; margin-bottom: 3pt !important; }
+  .rec-flag { font-size: 8pt !important; margin-bottom: 4pt !important; }
+  .rec-num { font-size: 16pt !important; }
+  .rec-item { padding: 10pt 12pt !important; gap: 10pt !important; }
+  .rec-list { gap: 8pt !important; margin-bottom: 16pt !important; }
+
+  /* ── Tier labels ── */
+  .tier-label { margin-top: 14pt !important; margin-bottom: 8pt !important; font-size: 8pt !important; }
+
+  /* ── Pull quote ── */
+  .pull-quote {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    padding: 8pt 14pt !important;
+    margin: 12pt 0 !important;
+  }
+  .pq-text { font-size: 10pt !important; }
+
+  /* ── Charts ── */
+  .ch-wrap { height: 130pt !important; }
+  .ch-wrap-sm { height: 100pt !important; }
+
+  /* ── Tags ── */
+  .tag-cloud { gap: 4pt !important; margin-top: 8pt !important; }
+  .tag { padding: 3pt 8pt !important; font-size: 9pt !important; }
+
+  /* ── Notes ── */
+  .note { font-size: 8.5pt !important; padding: 6pt 10pt !important; margin-top: 8pt !important; }
+
+  /* ── Comp items ── */
+  .comp-item { padding: 5pt 8pt !important; font-size: 10pt !important; margin-bottom: 4pt !important; }
+
+  /* ── Risk/opp cards ── */
+  .risk-item { font-size: 9pt !important; padding: 5pt 0 !important; }
+  .risk-label { font-size: 8pt !important; margin-bottom: 6pt !important; }
+  .risk-card { padding: 10pt 12pt !important; }
 }
 </style>
 </head>
@@ -152,15 +346,18 @@ thead{display:table-header-group;}
 
 <header class="site-header">
   <div class="logo-row">
-    <img src="data:image/png;base64,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" alt="Allyn" class="allyn-bug-img">
-    <div class="logo-text">Insights</div>
+    <div class="allyn-bug">allyn</div>
+    <div>
+      <div class="logo-text">Allyn Media</div>
+      <div class="logo-product">Insights</div>
+    </div>
   </div>
   <div style="display:flex;align-items:center;gap:20px;">
-    <div>
-      <div class="hc-name">Dallas YMCA Turkey Trot</div>
-      <div class="hc-period">Meta Ads Progress Report &middot; Data through Nov. 17, 2026, 10:30 a.m. CT</div>
+    <div style="text-align:right;">
+      <div class="hc-name">Vivante Turtle Creek</div>
+      <div class="hc-period">Monthly Intelligence Report &mdash; May 2026</div>
     </div>
-    <button class="print-btn" onclick="window.print()" title="Download as PDF">
+    <button class="print-btn" onclick="printReport()" title="Download as PDF">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       Download PDF
     </button>
@@ -168,99 +365,651 @@ thead{display:table-header-group;}
 </header>
 <div class="red-bar"></div>
 
-<div class="report-cover">
-  <img src="data:image/png;base64,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" alt="Allyn" class="cover-logo">
-  <div class="cover-eyebrow">Allyn Insights &mdash; Meta Ads</div>
-  <div class="cover-headline">Dallas YMCA Turkey Trot 2026<br>Meta Ads Progress Report</div>
-  <div class="cover-sub">October 6&ndash;November 17, 2026 &middot; Mid-flight report, data through Nov. 17, 2026 (10:30 a.m. CT) &middot; Prepared by Allyn &middot; Confidential</div>
-  <div class="cover-metrics" style="grid-template-columns:repeat(3,1fr);">
-    <div class="cm"><div class="cm-label">Landing Page Views</div><div class="cm-val">28,694</div><div class="cm-delta fl">Visits to the Race Roster registration page</div></div>
-    <div class="cm"><div class="cm-label">Cost per Landing Page View</div><div class="cm-val">$0.25</div><div class="cm-delta fl">Blended across all ads</div></div>
-    <div class="cm"><div class="cm-label">Impressions</div><div class="cm-val">724,694</div><div class="cm-delta fl">Facebook, Instagram and partner placements</div></div>
+<nav class="site-nav">
+  <button class="nav-btn active" onclick="showPage('report',this)"><span class="nav-star">&#9733;</span>Intelligence Report</button>
+  <button class="nav-btn" onclick="showPage('paid',this)">Paid Media</button>
+  <button class="nav-btn" onclick="showPage('website',this)">Website</button>
+  <button class="nav-btn" onclick="showPage('social',this)">Social</button>
+  <button class="nav-btn" onclick="showPage('seo',this)">SEO &amp; Site Health</button>
+</nav>
+
+<!-- PAGE: INTELLIGENCE REPORT -->
+<div id="page-report" class="page active">
+
+  <div class="report-cover">
+    <div class="cover-eyebrow">Allyn Insights &mdash; Monthly Strategic Intelligence</div>
+    <div class="cover-headline">Vivante Turtle Creek<br>Media Intelligence Report</div>
+    <div class="cover-sub">April 1 &ndash; May 12, 2026 &middot; Prepared by Allyn Media &middot; Confidential</div>
+    <div class="cover-metrics">
+      <div class="cm"><div class="cm-val">9.7M</div><div class="cm-label">Earned Media Reach</div><div class="cm-delta up">+15.7% vs prior period</div></div>
+      <div class="cm"><div class="cm-val">16</div><div class="cm-label">Press Articles (YTD)</div><div class="cm-delta dn">vs CC Young 177</div></div>
+      <div class="cm"><div class="cm-val">$35.5K</div><div class="cm-label">Paid Media Spend</div><div class="cm-delta warn">$138 avg cost/conv</div></div>
+      <div class="cm"><div class="cm-val">14.9%</div><div class="cm-label">Social Eng. Rate</div><div class="cm-delta up">Above category average</div></div>
+    </div>
+  </div>
+
+  <div class="report-body">
+
+    <!-- SECTION 1 -->
+    <div class="report-section">
+      <div class="section-number">Section 1</div>
+      <div class="section-title">Coverage Summary</div>
+      <div class="split-3-2">
+        <div class="prose">
+          <p>Vivante Turtle Creek generated <strong>11 earned media mentions</strong> between March 1 and May 12, 2026, reaching an estimated potential audience of <strong>9.7 million</strong> — a 15.7% increase over the prior period. While mention volume declined 21.4%, the reach increase signals that coverage is landing in higher-authority outlets and on higher-reach social accounts than previously.</p>
+          <p>The dominant story in circulation is the <strong>Turtle Creek development narrative</strong> — specifically, the project's proximity to the Clover Tower construction site and the evolution of the Vivante brand in the Dallas market. This conversation is being driven primarily by a highly engaged Reddit community (r/Dallasdevelopment) and picked up by Dallas-area commercial real estate press, most notably ConnectCRE.</p>
+          <p>A notable caveat: several mentions originating in France and Canada reference "Bretagne Vivante," a French environmental organization, and should be excluded from net brand analysis. When filtered for client-relevant mentions, the effective count is closer to <strong>7 mentions</strong>, all U.S.-based, concentrated in Texas and focused on real estate development.</p>
+          <p>Coverage sentiment is overwhelmingly <strong>neutral (57%)</strong>, which is common for a pre-opening development project. The absence of positive sentiment reflects a missed opportunity: there is no proactive PR program currently generating coverage that frames Vivante on its own terms — as a luxury senior living destination, not merely as a construction site near other projects.</p>
+        </div>
+        <div>
+          <div class="data-card">
+            <div class="dc-title">Mentions by Media Type</div>
+            <div class="bar-rows">
+              <div class="bi"><div class="bl" style="width:110px;">Blogs</div><div class="bt"><div class="bf" style="width:100%;background:var(--red);"></div></div><div class="bv">3</div></div>
+              <div class="bi"><div class="bl" style="width:110px;">Online News</div><div class="bt"><div class="bf" style="width:100%;background:var(--dark);"></div></div><div class="bv">3</div></div>
+              <div class="bi"><div class="bl" style="width:110px;">X (Twitter)</div><div class="bt"><div class="bf" style="width:100%;background:var(--gray);"></div></div><div class="bv">3</div></div>
+              <div class="bi"><div class="bl" style="width:110px;">Reddit</div><div class="bt"><div class="bf" style="width:67%;background:var(--red);opacity:.4;"></div></div><div class="bv">2</div></div>
+            </div>
+          </div>
+          <div class="data-card" style="margin-top:12px;">
+            <div class="dc-title">Geographic Distribution</div>
+            <div class="bar-rows">
+              <div class="bi"><div class="bl" style="width:110px;">United States</div><div class="bt"><div class="bf" style="width:100%;background:var(--red);"></div></div><div class="bv">7</div></div>
+              <div class="bi"><div class="bl" style="width:110px;">France *</div><div class="bt"><div class="bf" style="width:29%;background:var(--gray);opacity:.5;"></div></div><div class="bv">2</div></div>
+              <div class="bi"><div class="bl" style="width:110px;">Canada *</div><div class="bt"><div class="bf" style="width:29%;background:var(--gray);opacity:.5;"></div></div><div class="bv">2</div></div>
+            </div>
+            <div class="note">* France and Canada mentions reference "Bretagne Vivante," an unrelated French environmental group — excluded from brand analysis.</div>
+          </div>
+          <div class="data-card" style="margin-top:12px;">
+            <div class="dc-title">Top Authors by Engagement</div>
+            <div class="comp-item"><span>dallaz95 (Reddit)</span><span style="font-weight:700;color:var(--red);">33 engagements</span></div>
+            <div class="comp-item"><span>@grok (X &mdash; 8.6M reach)</span><span>0 engagements</span></div>
+            <div class="comp-item"><span>ConnectCRE</span><span>0 engagements</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="report-section">
+      <div class="section-number">Section 2</div>
+      <div class="section-title">Narrative &amp; Sentiment Analysis</div>
+      <div class="prose-wide">
+        <p>The Vivante brand currently exists in public conversation almost entirely as a <strong>supporting character in someone else's story</strong>. In every major mention this period, Vivante Turtle Creek is referenced as a geographic marker — "just north of Vivante Turtle Creek" — rather than as the subject of coverage. This is a meaningful reputational signal: the brand has not yet established an independent narrative in the Dallas market.</p>
+      </div>
+      <div class="pull-quote" style="max-width:720px;">
+        <div class="pq-text">"Vivante is being talked about, but not on its own terms. The brand exists as a landmark in other people's stories — not as the subject of its own."</div>
+      </div>
+      <div class="split">
+        <div class="prose">
+          <p>The dominant themes in coverage — development, construction, cost, area, turtle creek — confirm the conversation is entirely developer-driven. Words like "living," "human," and "vision" appear in the theme cloud but are buried beneath real estate terminology, suggesting that Vivante's lifestyle positioning has not yet broken through into earned media.</p>
+          <p>The single most significant narrative risk identified this period is the <strong>project downsizing story</strong>. Multiple mentions reference the reduction from a proposed 30-story tower to a 15-story building. This story is currently framed neutrally — as a construction fact — but it has potential to shift negative if picked up as a scaled-back or compromised project. <strong>Three anger-coded mentions clustered around April 26</strong> align precisely with this coverage and represent the first credible reputational signal of the monitoring period.</p>
+          <p>On the positive side, the lifestyle content Vivante is producing on social — dining experiences, wellness, construction progress — is generating its strongest engagement when it is authentic and forward-looking. <strong>This content strategy is the foundation of a proactive narrative</strong>, but it has not yet been leveraged into earned media placements.</p>
+        </div>
+        <div>
+          <div class="data-card">
+            <div class="dc-title">Top Themes in Coverage</div>
+            <div class="tag-cloud">
+              <div class="tag t-red">vivante</div>
+              <div class="tag t-dark">development</div>
+              <div class="tag t-dark">living</div>
+              <div class="tag t-dark">turtle creek</div>
+              <div class="tag t-gray">cost</div>
+              <div class="tag t-gray">area</div>
+              <div class="tag t-gray">resistance</div>
+              <div class="tag t-gray">clover tower</div>
+              <div class="tag t-gray">vision</div>
+              <div class="tag t-gray">human</div>
+            </div>
+          </div>
+          <div class="data-card" style="margin-top:12px;">
+            <div class="dc-title">Sentiment Breakdown</div>
+            <div class="ch-wrap-sm"><canvas id="sentChart"></canvas></div>
+          </div>
+          <div class="data-card" style="margin-top:12px;">
+            <div class="dc-title">Emotion Signals</div>
+            <div class="comp-item hl"><span>Anger (Apr 26 cluster)</span><span>3 mentions</span></div>
+            <div class="comp-item"><span>All other emotions</span><span>0 mentions</span></div>
+            <div class="note" style="margin-top:8px;">Anger cluster aligns with project downsizing coverage. Monitor closely in June.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="report-section">
+      <div class="section-number">Section 3</div>
+      <div class="section-title">Competitive Media Position</div>
+      <div class="prose-wide" style="margin-bottom:20px;">
+        <p>Viewed against direct Dallas-area competitors, Vivante's earned media position is the most underdeveloped of the set — with one significant exception. Despite generating only <strong>16 press articles</strong> over the past 13 months (versus CC Young's 177 and Atria's 286), Vivante's <strong>Unique Visitor Monthly reach of 369 million</strong> is the highest of the three brands monitored. Vivante's coverage, when it lands, reaches more people than its competitors' coverage. The problem is frequency, not quality of placement.</p>
+      </div>
+      <div class="split">
+        <div class="data-card">
+          <div class="dc-title">Press Article Volume &mdash; 13 Months</div>
+          <div class="ch-wrap"><canvas id="earnedChart"></canvas></div>
+        </div>
+        <div>
+          <div class="data-card">
+            <div class="dc-title">UVM Comparison (Total Audience Reach)</div>
+            <div class="bar-rows">
+              <div class="bi"><div class="bl" style="width:130px;">Vivante TC</div><div class="bt"><div class="bf" style="width:100%;background:var(--red);"></div></div><div class="bv">369M</div></div>
+              <div class="bi"><div class="bl" style="width:130px;">CC Young</div><div class="bt"><div class="bf" style="width:42%;background:var(--dark);"></div></div><div class="bv">155M</div></div>
+              <div class="bi"><div class="bl" style="width:130px;">Atria Senior Living</div><div class="bt"><div class="bf" style="width:37%;background:var(--gray);"></div></div><div class="bv">137M</div></div>
+            </div>
+            <div class="note">Vivante's coverage reaches the largest audiences of the three brands — but generates the fewest articles. This is a media relations volume problem, not an outlet quality problem.</div>
+          </div>
+          <div class="data-card" style="margin-top:12px;">
+            <div class="dc-title">Social Follower Count</div>
+            <div class="comp-item"><span>CC Young</span><span style="font-weight:700;">5,802</span></div>
+            <div class="comp-item"><span>Preston of the Park Cities</span><span style="font-weight:700;">1,190</span></div>
+            <div class="comp-item"><span>Ventana by Buckner</span><span style="font-weight:700;">1,168</span></div>
+            <div class="comp-item"><span>Belmont Village</span><span style="font-weight:700;">708</span></div>
+            <div class="comp-item hl"><span>Vivante Turtle Creek</span><span>201</span></div>
+            <div class="comp-item"><span>Clearwater Highland Park</span><span style="font-weight:700;">105</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="prose" style="margin-top:24px;">
+        <p>On social media, CC Young's dominance reflects years of consistent community-building. However, Vivante's <strong>14.9% engagement rate</strong> — while generated from a smaller follower base — outperforms CC Young's estimated rate on a per-post basis. The content is working. The audience simply hasn't been built yet, which is a solvable problem with a consistent paid follower acquisition strategy.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 4 -->
+    <div class="report-section">
+      <div class="section-number">Section 4</div>
+      <div class="section-title">Recommended Actions &amp; Allyn Services</div>
+      <div class="prose-wide" style="margin-bottom:28px;">
+        <p>The following recommendations are organized by the Allyn practice area best suited to execute them and tiered by scope — from quick tactical actions to larger strategic engagements. Each recommendation is grounded in data from this reporting period and tied to Vivante's pre-opening brand-building objectives.</p>
+      </div>
+
+      <!-- TIER 1: MEDIA RELATIONS -->
+      <div style="margin-bottom:8px;">
+        <div style="font-family:var(--condensed);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.14em;color:var(--red);padding:6px 0;border-bottom:2px solid var(--red);margin-bottom:14px;">Tier 1 &mdash; Strategic Media Relations &amp; Story Pitching</div>
+      </div>
+      <div class="rec-list" style="margin-bottom:32px;">
+
+        <div class="rec-item">
+          <div class="rec-num">01</div>
+          <div class="rec-body">
+            <div class="rec-flag flag-urgent">Urgent &mdash; Act This Month</div>
+            <div class="rec-title">Develop a Proactive Narrative to Get Ahead of the Downsizing Story</div>
+            <div class="rec-text">Three anger-coded mentions clustered around April 26 align with coverage of the project's reduction from 30 to 15 stories. This story is currently neutral in tone but alive in the Dallas development community and will resurface at groundbreaking. Allyn's media relations team can develop the press materials, craft the message and brief key journalists before the story writes itself. <strong>Allyn delivers: message development, press release, journalist briefings with Dallas Morning News real estate desk, Dallas Business Journal and ConnectCRE.</strong> This is a targeted, fast-moving engagement that can be scoped and executed in weeks.</div>
+          </div>
+        </div>
+
+        <div class="rec-item">
+          <div class="rec-num">02</div>
+          <div class="rec-body">
+            <div class="rec-flag flag-near">Near-Term &mdash; Next 30 Days</div>
+            <div class="rec-title">Pitch a Feature Story on Vivante's Design Vision to Dallas Press</div>
+            <div class="rec-text">Vivante's UVM of 369 million — highest in the competitive set — means a single well-placed feature story generates more audience exposure than a full month of CC Young's press activity. The "Living Material" design philosophy and the Turtle Creek property's relationship to its natural surroundings is a genuinely differentiated story that no competitor is currently pitching. <strong>Allyn delivers: story pitching, bylined article or opinion editorial placed in Dallas Morning News, D Magazine or Dallas Culturemap.</strong> The groundbreaking provides a natural news hook for timing. This is a quick-strike pitch engagement with high earned media return.</div>
+          </div>
+        </div>
+
+        <div class="rec-item">
+          <div class="rec-num">03</div>
+          <div class="rec-body">
+            <div class="rec-flag flag-near">Near-Term &mdash; Next 30 Days</div>
+            <div class="rec-title">Engage r/Dallasdevelopment and Build a Community Relations Presence</div>
+            <div class="rec-text">The Reddit community r/Dallasdevelopment generated <strong>33 of the 35 total earned media engagements</strong> this period. This community is actively following the Turtle Creek project and is the most direct line to engaged Dallas development observers. Allyn's community engagement practice is built for exactly this kind of proactive, transparent participation — answering questions, sharing construction updates and providing context on design decisions before a negative narrative takes hold. <strong>Allyn delivers: community engagement strategy, messaging guidance and ongoing monitoring through Allyn Insights.</strong></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TIER 2: SOCIAL MEDIA & CONTENT -->
+      <div style="margin-bottom:8px;">
+        <div style="font-family:var(--condensed);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.14em;color:var(--red);padding:6px 0;border-bottom:2px solid var(--red);margin-bottom:14px;">Tier 2 &mdash; Social Media &amp; Content Strategy</div>
+      </div>
+      <div class="rec-list" style="margin-bottom:32px;">
+
+        <div class="rec-item">
+          <div class="rec-num">04</div>
+          <div class="rec-body">
+            <div class="rec-flag flag-urgent">Urgent &mdash; Act This Month</div>
+            <div class="rec-title">Redesign the Turtle Creek Landing Page to Capture the Interest It's Generating</div>
+            <div class="rec-text">The /turtle-creek-new page receives 499 sessions monthly but converts at just <strong>0.20%</strong> — the lowest on the site and 16&times; below the homepage rate. Users are spending nearly a minute on the page, meaning the interest is there. The page needs a VIP interest form above the fold, a clear call to action and social proof content. <strong>Allyn delivers: website creation and collateral services to redesign and redeploy the Turtle Creek landing page</strong> with conversion-optimized copy, layout and a lead capture mechanism. Every dollar currently spent on awareness advertising is underperforming until this page is fixed.</div>
+          </div>
+        </div>
+
+        <div class="rec-item">
+          <div class="rec-num">05</div>
+          <div class="rec-body">
+            <div class="rec-flag flag-near">Near-Term &mdash; Next 30 Days</div>
+            <div class="rec-title">Build a Social Media Content Calendar Anchored in What the Data Says Works</div>
+            <div class="rec-text">The three highest-performing posts this period were Instagram posts — construction progress (19 likes), dining (15 likes), wellness (13 likes). The three lowest were Facebook posts with 1 like each. Link clicks are currently at zero, meaning the audience is not being moved from social to the conversion funnel. <strong>Allyn delivers: social media strategy and content management, including a monthly content calendar, copywriting, scheduling and performance reporting.</strong> Posting frequency should increase to 5&times; per week on Instagram, front-loading construction milestones. Every post should drive to the Turtle Creek signup page. Facebook should be reserved primarily for paid distribution until the page follower base grows.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TIER 3: EVENTS & SPOKESPERSON -->
+      <div style="margin-bottom:8px;">
+        <div style="font-family:var(--condensed);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.14em;color:var(--red);padding:6px 0;border-bottom:2px solid var(--red);margin-bottom:14px;">Tier 3 &mdash; Event Planning &amp; Spokesperson Development</div>
+      </div>
+      <div class="rec-list" style="margin-bottom:32px;">
+
+        <div class="rec-item">
+          <div class="rec-num">06</div>
+          <div class="rec-body">
+            <div class="rec-flag flag-near">Near-Term &mdash; Next 30 Days</div>
+            <div class="rec-title">Plan a Media-Ready Groundbreaking Event</div>
+            <div class="rec-text">Construction commencement is an earned media moment that will happen regardless — the question is whether Vivante controls the narrative or hands it to reporters working from public records. A well-produced groundbreaking with media invitations, architect remarks, project renderings and a designed visual backdrop gives Dallas Morning News and D Magazine a story they can write on your terms. <strong>Allyn delivers: full event planning and execution, media invitation and RSVP management, press kit production and on-site media coordination.</strong> Allyn has produced high-profile events for some of the region's most visible projects and knows how to make a groundbreaking land as a lifestyle story, not a construction update.</div>
+          </div>
+        </div>
+
+        <div class="rec-item">
+          <div class="rec-num">07</div>
+          <div class="rec-body">
+            <div class="rec-flag flag-near">Near-Term &mdash; Next 30 Days</div>
+            <div class="rec-title">Prepare a Spokesperson for Media Interviews at Groundbreaking</div>
+            <div class="rec-text">The project currently has no identified public voice. Every earned media mention this period was written without a Vivante spokesperson — the brand is being described, not speaking. With a groundbreaking press cycle approaching, having a prepared spokesperson — whether the developer, the architect or a Vivante executive — is essential to shaping how the project is characterized in print and broadcast. <strong>Allyn delivers: spokesperson training, including message development, interview preparation and Q&amp;A readiness for likely questions about the project timeline, design philosophy and the 15-story footprint.</strong></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TIER 4: CREATIVE & VIDEO -->
+      <div style="margin-bottom:8px;">
+        <div style="font-family:var(--condensed);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.14em;color:var(--red);padding:6px 0;border-bottom:2px solid var(--red);margin-bottom:14px;">Tier 4 &mdash; Creative, Video &amp; Brand</div>
+      </div>
+      <div class="rec-list" style="margin-bottom:32px;">
+
+        <div class="rec-item">
+          <div class="rec-num">08</div>
+          <div class="rec-body">
+            <div class="rec-flag flag-ongoing">Strategic Investment</div>
+            <div class="rec-title">Produce a Brand Film Anchored in the "Living Material" Design Story</div>
+            <div class="rec-text">No competitor in the Dallas senior living market is currently owning a design and lifestyle narrative in video. Vivante's "Living Material" concept — the relationship between the building, the landscape and the people who will live there — is a cinematic story, not a brochure story. A 2–3 minute brand film shot during construction, showing the vision taking shape, would serve as the anchor asset for the entire pre-opening campaign: seeded in the r/Dallasdevelopment community, pitched alongside press outreach, embedded on the Turtle Creek landing page and distributed through paid social. <strong>Allyn delivers: video production from concept through delivery, including script, shoot and post-production.</strong> This is the highest-leverage single creative investment available to the Vivante Turtle Creek pre-opening campaign.</div>
+          </div>
+        </div>
+
+        <div class="rec-item">
+          <div class="rec-num">09</div>
+          <div class="rec-body">
+            <div class="rec-flag flag-ongoing">Strategic Investment</div>
+            <div class="rec-title">Conduct a Brand Audit to Align Vivante Turtle Creek's Digital Presence with Its Positioning</div>
+            <div class="rec-text">The data reveals a disconnect between Vivante's luxury senior living positioning and its digital execution: a landing page converting at 0.20%, paid social traffic averaging just 7 seconds per session, and a website that scores poorly on independent mobile speed testing. These are not minor gaps — they reflect a misalignment between how the brand presents itself in marketing materials and how it experiences on screen. <strong>Allyn delivers: brand audit across all owned digital channels — website, social, advertising creative and landing pages — with a written assessment and actionable recommendations.</strong> This engagement establishes the baseline for all creative work that follows and ensures that the brand film, social content and press materials are all pulling in the same direction.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TIER 5: PAID MEDIA ADVISORY -->
+      <div style="margin-bottom:8px;">
+        <div style="font-family:var(--condensed);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.14em;color:var(--red);padding:6px 0;border-bottom:2px solid var(--red);margin-bottom:14px;">Tier 5 &mdash; Paid Media &amp; Digital Advisory</div>
+      </div>
+      <div class="rec-list">
+
+        <div class="rec-item">
+          <div class="rec-num">10</div>
+          <div class="rec-body">
+            <div class="rec-flag flag-urgent">Urgent &mdash; Act This Month</div>
+            <div class="rec-title">Restructure Google Ads Spend Around What Is Actually Converting</div>
+            <div class="rec-text">The Memory Care campaign spent $3,302 and generated 5 conversions at <strong>$660 each</strong>. The OC Assisted Living Terms campaign spends $22,768 at $364 per conversion — nearly 9&times; the Brand campaign's $41.63 rate. The keyword "memory care assisted living" alone spent $1,065 with zero conversions. <strong>Allyn recommends as strategic counsel: pause the Memory Care campaign, reduce OC Assisted Living by $5,000–8,000/month and reinvest in the YouTube Demand Gen campaign</strong>, which is converting at $55 on 65 conversions and is significantly underweighted. These changes should be implemented by your media buyer or Google Ads manager. Allyn can provide the strategic brief and performance benchmarks to guide that conversation.</div>
+          </div>
+        </div>
+
+        <div class="rec-item">
+          <div class="rec-num">11</div>
+          <div class="rec-body">
+            <div class="rec-flag flag-ongoing">Ongoing Priority</div>
+            <div class="rec-title">Build Organic Search Authority to Reduce Long-Term Dependency on Paid Search</div>
+            <div class="rec-text">Vivante holds #1 rankings for every branded keyword but ranks at #26 for "assisted living orange county" (880 monthly searches) — yet is paying $15–18 per click to bid on that term. <strong>Allyn's website and digital practice can develop dedicated location landing pages</strong> for each service market and initiate outreach to senior living directories — A Place for Mom, Seniorly and Caring.com — that appear in the competitive keyword data. Referral traffic currently converts at 74.1% engagement rate, the highest of any channel, which directly validates the value of building these directory relationships. This is a 3–6 month program that reduces paid search dependency and compounds over time.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 5 -->
+    <div class="report-section">
+      <div class="section-number">Section 5</div>
+      <div class="section-title">Upcoming Risks &amp; Opportunities</div>
+      <div class="prose" style="margin-bottom:24px;">
+        <p>The following factors are likely to generate media attention or require proactive positioning in the next 30–60 days. Each maps to an Allyn practice area that can address it directly.</p>
+      </div>
+      <div class="risk-grid">
+        <div class="risk-card risk">
+          <div class="risk-label r">Risks to Monitor</div>
+          <div class="risk-item"><strong>Groundbreaking coverage:</strong> Construction commencement will trigger a new press cycle. Without proactive message development and journalist briefings, framing will be left to reporters working from public records that emphasize the project downsizing. <em>Allyn: media relations, message development.</em></div>
+          <div class="risk-item"><strong>Clover Tower narrative bleed:</strong> Multiple Vivante mentions arise only because Vivante is cited as a nearby landmark. If Clover Tower coverage turns negative, Vivante risks being pulled into an unfavorable story by proximity. <em>Allyn: crisis communications readiness, ongoing monitoring via Allyn Insights.</em></div>
+          <div class="risk-item"><strong>Competitor content acceleration:</strong> CC Young published 18 posts this period with top engagement scores of 31, 30 and 24 reactions. Without a consistent social media strategy, the follower gap will continue to widen. <em>Allyn: social media management and content strategy.</em></div>
+          <div class="risk-item"><strong>No identified brand spokesperson:</strong> Every mention this period was written without a Vivante voice. With press attention building toward groundbreaking, the absence of a prepared spokesperson is an escalating vulnerability. <em>Allyn: spokesperson training and message development.</em></div>
+        </div>
+        <div class="risk-card opp">
+          <div class="risk-label o">Opportunities to Pursue</div>
+          <div class="risk-item"><strong>Groundbreaking as an earned media event:</strong> The same moment that carries reputational risk also carries the highest earned media opportunity of the pre-opening period. A well-executed event with media invitations, prepared remarks and visual storytelling can land as a lifestyle feature, not a construction update. <em>Allyn: event planning, media tours, press kit production.</em></div>
+          <div class="risk-item"><strong>Owning the luxury design narrative:</strong> No Dallas senior living competitor is pitching an architectural or design story. Vivante's "Living Material" concept is an uncontested press angle. <em>Allyn: story pitching, bylined articles, opinion editorials.</em></div>
+          <div class="risk-item"><strong>VIP interest list as a media hook:</strong> "Dallas's most anticipated senior living community" is a legitimate pitch to Dallas Culturemap, D Magazine and Advocate — and a documented waitlist makes that pitch credible. <em>Allyn: media planning and placement, community engagement.</em></div>
+          <div class="risk-item"><strong>Brand film as the pre-opening anchor asset:</strong> A 2–3 minute film shot during construction — the vision taking shape — would serve every channel simultaneously: press outreach, social, the landing page, paid video. No competitor has done this. <em>Allyn: video production, creative and design.</em></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<div class="report-body">
-
-  <!-- SECTION 1 -->
-  <div class="report-section">
-    <div class="section-number">Section 1</div>
-    <div class="section-title">Flight Snapshot &mdash; October 6&ndash;November 17, 2026</div>
-    <div class="prose-wide">
-      <p>Meta advertising for the 2026 Dallas YMCA Turkey Trot began on <strong>October 6, 2026</strong> and runs through race morning on <strong>Thanksgiving Day, November 26</strong>. Every ad sends people to the official registration page on Race Roster, and Meta optimizes delivery for landing page views &mdash; people who click through and wait for that page to load.</p>
-      <p>Through November 17, the ads drove <strong>28,694 landing page views</strong> from <strong>724,694 impressions</strong> at a blended cost of <strong>$0.25 per view</strong>.</p>
+<!-- PAGE: PAID MEDIA -->
+<div id="page-paid" class="page">
+  <div class="report-body" style="padding-top:32px;">
+    <div class="section-number">Supporting Data</div>
+    <div class="section-title">Paid Media</div>
+    <p style="font-family:var(--condensed);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray);margin-bottom:12px;">Google Ads &mdash; Feb 1 to Apr 20, 2026</p>
+    <div class="data-grid-4">
+      <div class="kpi"><div class="kpi-label">Total Spend</div><div class="kpi-value">$35.5K</div><div class="kpi-sub fl">6 campaigns</div></div>
+      <div class="kpi"><div class="kpi-label">Conversions</div><div class="kpi-value">257</div><div class="kpi-sub warn">$138 avg cost/conv</div></div>
+      <div class="kpi"><div class="kpi-label">Total Clicks</div><div class="kpi-value">18,552</div><div class="kpi-sub fl">Avg CPC $1.91</div></div>
+      <div class="kpi"><div class="kpi-label">Impressions</div><div class="kpi-value">412K</div><div class="kpi-sub fl">All campaigns</div></div>
     </div>
-
-    <div class="data-card">
-      <div class="dc-title">Results by Ad</div>
+    <div class="data-grid-2" style="margin-top:20px;">
+      <div class="data-card">
+        <div class="dc-title">Campaign Efficiency</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Campaign</th><th>Spend</th><th>Conv.</th><th>Cost/Conv.</th><th>Rating</th></tr></thead>
+            <tbody>
+              <tr><td>Brand Search</td><td>$5,183</td><td>124.5</td><td>$41.63</td><td><span class="badge b-green">Efficient</span></td></tr>
+              <tr><td>YouTube Conversions</td><td>$3,591</td><td>65.0</td><td>$55.24</td><td><span class="badge b-green">Efficient</span></td></tr>
+              <tr><td>OC Assisted Living</td><td>$22,768</td><td>62.5</td><td>$364.28</td><td><span class="badge b-red">High CPA</span></td></tr>
+              <tr><td>Memory Care</td><td>$3,302</td><td>5.0</td><td>$660.43</td><td><span class="badge b-red">Review Now</span></td></tr>
+              <tr><td>YouTube Awareness</td><td>$652</td><td>0</td><td>&mdash;</td><td><span class="badge b-gray">Awareness</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="data-card">
+        <div class="dc-title">Spend vs Conversions</div>
+        <div class="ch-wrap"><canvas id="convChart"></canvas></div>
+      </div>
+    </div>
+    <div class="data-card" style="margin-top:16px;">
+      <div class="dc-title">Top Keywords by Spend</div>
       <div class="tbl-wrap">
         <table>
-          <thead><tr><th>Ad</th><th>Status</th><th class="num">Amount spent</th><th class="num">Impressions</th><th class="num">Landing page views</th><th class="num">Cost per view</th></tr></thead>
+          <thead><tr><th>Keyword</th><th>Spend</th><th>Clicks</th><th>Conv.</th><th>CPC</th><th>Signal</th></tr></thead>
           <tbody>
-            <tr><td>Start Line Video</td><td><span class="badge b-green">Active</span></td><td class="num">$1,746.66</td><td class="num">202,038</td><td class="num">11,256</td><td class="num">$0.16</td></tr>
-            <tr><td>Dog Carousel</td><td><span class="badge b-green">Active</span></td><td class="num">$1,851.53</td><td class="num">147,056</td><td class="num">8,027</td><td class="num">$0.23</td></tr>
-            <tr><td>Costume Video <span class="badge b-gray">New</span></td><td><span class="badge b-green">Active</span></td><td class="num">$1,669.62</td><td class="num">220,265</td><td class="num">6,316</td><td class="num">$0.26</td></tr>
-            <tr><td>Mascot Video <span class="badge b-gray">New</span></td><td><span class="badge b-green">Active</span></td><td class="num">$1,675.15</td><td class="num">133,871</td><td class="num">2,692</td><td class="num">$0.62</td></tr>
-            <tr><td>Giant Turkey Video</td><td><span class="badge b-green">Active</span></td><td class="num">$100.21</td><td class="num">21,464</td><td class="num">403</td><td class="num">$0.25</td></tr>
-            <tr class="total"><td>Total</td><td></td><td class="num">$7,043.17</td><td class="num">724,694</td><td class="num">28,694</td><td class="num">$0.25</td></tr>
+            <tr><td>"assisted living orange county"</td><td>$7,418</td><td>477</td><td>15.5</td><td>$15.55</td><td><span class="badge b-amber">Moderate</span></td></tr>
+            <tr><td>[vivante costa mesa]</td><td>$1,467</td><td>298</td><td>39.0</td><td>$4.92</td><td><span class="badge b-green">Strong</span></td></tr>
+            <tr><td>[vivante newport center]</td><td>$1,069</td><td>269</td><td>27.5</td><td>$3.97</td><td><span class="badge b-green">Strong</span></td></tr>
+            <tr><td style="color:var(--red);">"memory care assisted living"</td><td>$1,065</td><td>72</td><td>0</td><td>$14.80</td><td><span class="badge b-red">Zero conv.</span></td></tr>
+            <tr><td>"assisted living huntington beach ca"</td><td>$2,223</td><td>136</td><td>4.0</td><td>$16.35</td><td><span class="badge b-amber">High CPC</span></td></tr>
           </tbody>
         </table>
       </div>
     </div>
+    <p style="font-family:var(--condensed);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray);margin-top:28px;margin-bottom:12px;">Meta / Instagram Ads &mdash; Apr 1 to May 12, 2026</p>
+    <div class="data-grid-4">
+      <div class="kpi"><div class="kpi-label">Total Spend</div><div class="kpi-value">$1,027</div><div class="kpi-sub fl">6 ad sets</div></div>
+      <div class="kpi"><div class="kpi-label">Cost Per Click</div><div class="kpi-value">$1.01</div><div class="kpi-sub fl">Turtle Creek account</div></div>
+      <div class="kpi"><div class="kpi-label">Top Reach</div><div class="kpi-value">3,407</div><div class="kpi-sub fl">New Awareness Campaign</div></div>
+      <div class="kpi"><div class="kpi-label">Paid Social Sessions</div><div class="kpi-value">1,758</div><div class="kpi-sub warn">7s avg session time</div></div>
+    </div>
+  </div>
+</div>
 
-    <div class="split" style="margin-top:20px;">
+<!-- PAGE: WEBSITE -->
+<div id="page-website" class="page">
+  <div class="report-body" style="padding-top:32px;">
+    <div class="section-number">Supporting Data</div>
+    <div class="section-title">Website Performance</div>
+    <p style="font-family:var(--condensed);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray);margin-bottom:12px;">Google Analytics 4 &mdash; vivanteliving.com &mdash; Apr 1 to May 12, 2026</p>
+    <div class="data-grid-4">
+      <div class="kpi"><div class="kpi-label">Total Sessions</div><div class="kpi-value">17,290</div><div class="kpi-sub fl">14,335 active users</div></div>
+      <div class="kpi"><div class="kpi-label">New Users</div><div class="kpi-value">13,807</div><div class="kpi-sub fl">80% of all users</div></div>
+      <div class="kpi"><div class="kpi-label">Key Events</div><div class="kpi-value">575</div><div class="kpi-sub fl">1.75% site-wide rate</div></div>
+      <div class="kpi"><div class="kpi-label">Avg Engagement</div><div class="kpi-value">45s</div><div class="kpi-sub warn">Homepage only 28s</div></div>
+    </div>
+    <div class="data-grid-2" style="margin-top:20px;">
       <div class="data-card">
-        <div class="dc-title">Landing Page Views by Ad</div>
+        <div class="dc-title">Sessions by Channel</div>
+        <div class="ch-wrap"><canvas id="channelChart"></canvas></div>
+      </div>
+      <div class="data-card">
+        <div class="dc-title">Channel Engagement Depth</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Channel</th><th>Eng. Rate</th><th>Avg Time</th><th>Events/Sess.</th></tr></thead>
+            <tbody>
+              <tr><td>Referral</td><td><span class="badge b-green">74.1%</span></td><td>5m 36s</td><td>20.3</td></tr>
+              <tr><td>Organic Search</td><td><span class="badge b-green">69.2%</span></td><td>1m 22s</td><td>10.5</td></tr>
+              <tr><td>Organic Social</td><td><span class="badge b-green">60.4%</span></td><td>39s</td><td>8.1</td></tr>
+              <tr><td>Paid Search</td><td><span class="badge b-amber">57.7%</span></td><td>48s</td><td>7.0</td></tr>
+              <tr><td>Direct</td><td><span class="badge b-red">34.9%</span></td><td>31s</td><td>7.8</td></tr>
+              <tr><td>Paid Social</td><td><span class="badge b-red">33.2%</span></td><td>7s</td><td>4.6</td></tr>
+              <tr><td>Cross-network</td><td><span class="badge b-red">30.4%</span></td><td>14s</td><td>4.4</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="data-card" style="margin-top:16px;">
+      <div class="dc-title">Landing Page Performance</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Page</th><th>Sessions</th><th>New Users</th><th>Avg Eng. Time</th><th>Key Events</th><th>Event Rate</th></tr></thead>
+          <tbody>
+            <tr><td>/assisted-living-newport-center</td><td>6,019</td><td>4,910</td><td>28s</td><td>163</td><td><span class="badge b-amber">1.73%</span></td></tr>
+            <tr><td>/vivante-landing-page-proposal-1</td><td>3,244</td><td>3,046</td><td>41s</td><td>34</td><td><span class="badge b-red">0.83%</span></td></tr>
+            <tr><td>/ (homepage)</td><td>2,095</td><td>1,503</td><td>1m 31s</td><td>91</td><td><span class="badge b-green">3.34%</span></td></tr>
+            <tr><td>/assisted-living-newport-mesa</td><td>1,170</td><td>941</td><td>1m 01s</td><td>58</td><td><span class="badge b-amber">2.74%</span></td></tr>
+            <tr><td style="font-weight:700;color:var(--red);">/turtle-creek-new</td><td>499</td><td>413</td><td>57s</td><td>2</td><td><span class="badge b-red">0.20%</span></td></tr>
+            <tr><td>/newport-center</td><td>448</td><td>373</td><td>1m 20s</td><td>14</td><td><span class="badge b-amber">2.46%</span></td></tr>
+            <tr><td>/memory-care-newport-mesa</td><td>178</td><td>153</td><td>1m 08s</td><td>7</td><td><span class="badge b-amber">2.81%</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">/turtle-creek-new converts at 0.20% — the lowest on the site and 16&times; below the homepage rate of 3.34%. Users are spending nearly a minute on the page but not taking action.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: SOCIAL -->
+<div id="page-social" class="page">
+  <div class="report-body" style="padding-top:32px;">
+    <div class="section-number">Supporting Data</div>
+    <div class="section-title">Social Media Performance</div>
+    <p style="font-family:var(--condensed);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray);margin-bottom:12px;">Hootsuite Performance Report &mdash; Apr 1 to May 12, 2026</p>
+    <div class="data-grid-4">
+      <div class="kpi"><div class="kpi-label">Posts Published</div><div class="kpi-value">22</div><div class="kpi-sub fl">Instagram + Facebook</div></div>
+      <div class="kpi"><div class="kpi-label">Post Impressions</div><div class="kpi-value">1,915</div><div class="kpi-sub fl">Both platforms</div></div>
+      <div class="kpi"><div class="kpi-label">Avg Engagement Rate</div><div class="kpi-value">14.9%</div><div class="kpi-sub up">Above category average</div></div>
+      <div class="kpi"><div class="kpi-label">Total Followers</div><div class="kpi-value">201</div><div class="kpi-sub dn">vs CC Young 5,802</div></div>
+    </div>
+    <div class="data-grid-2" style="margin-top:20px;">
+      <div class="data-card">
+        <div class="dc-title">Engagement Breakdown</div>
         <div class="bar-rows">
-          <div class="bi"><div class="bl">Start Line Video</div><div class="bt"><div class="bf" style="width:100%;background:var(--red);"></div></div><div class="bv">11,256</div></div>
-          <div class="bi"><div class="bl">Dog Carousel</div><div class="bt"><div class="bf" style="width:71.3%;background:var(--dark);"></div></div><div class="bv">8,027</div></div>
-          <div class="bi"><div class="bl">Costume Video</div><div class="bt"><div class="bf" style="width:56.1%;background:var(--gray);"></div></div><div class="bv">6,316</div></div>
-          <div class="bi"><div class="bl">Mascot Video</div><div class="bt"><div class="bf" style="width:23.9%;background:var(--gray);"></div></div><div class="bv">2,692</div></div>
-          <div class="bi"><div class="bl">Giant Turkey Video</div><div class="bt"><div class="bf" style="width:3.6%;background:var(--gray);"></div></div><div class="bv">403</div></div>
+          <div class="bi"><div class="bl" style="width:140px;">Reactions / Likes</div><div class="bt"><div class="bf" style="width:100%;background:var(--red);"></div></div><div class="bv">99</div></div>
+          <div class="bi"><div class="bl" style="width:140px;">Comments / Replies</div><div class="bt"><div class="bf" style="width:14%;background:var(--dark);"></div></div><div class="bv">14</div></div>
+          <div class="bi"><div class="bl" style="width:140px;">Video Views</div><div class="bt"><div class="bf" style="width:40%;background:var(--gray);"></div></div><div class="bv">40</div></div>
+          <div class="bi"><div class="bl" style="width:140px;">Shares</div><div class="bt"><div class="bf" style="width:4%;background:#ccc;"></div></div><div class="bv">4</div></div>
+          <div class="bi"><div class="bl" style="width:140px;">Link Clicks</div><div class="bt"><div class="bf" style="width:1%;background:#ccc;"></div></div><div class="bv">0</div></div>
         </div>
       </div>
       <div class="data-card">
-        <div class="dc-title">Cost per Landing Page View by Ad</div>
-        <div class="bar-rows">
-          <div class="bi"><div class="bl">Start Line Video</div><div class="bt"><div class="bf" style="width:25.8%;background:var(--red);"></div></div><div class="bv">$0.16</div></div>
-          <div class="bi"><div class="bl">Dog Carousel</div><div class="bt"><div class="bf" style="width:37.1%;background:var(--dark);"></div></div><div class="bv">$0.23</div></div>
-          <div class="bi"><div class="bl">Giant Turkey Video</div><div class="bt"><div class="bf" style="width:40.3%;background:var(--gray);"></div></div><div class="bv">$0.25</div></div>
-          <div class="bi"><div class="bl">Costume Video</div><div class="bt"><div class="bf" style="width:41.9%;background:var(--gray);"></div></div><div class="bv">$0.26</div></div>
-          <div class="bi"><div class="bl">Mascot Video</div><div class="bt"><div class="bf" style="width:100%;background:var(--gray);"></div></div><div class="bv">$0.62</div></div>
+        <div class="dc-title">Top Posts This Period</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Content</th><th>Likes</th><th>Platform</th></tr></thead>
+            <tbody>
+              <tr><td>Construction progress update</td><td><strong>19</strong></td><td>Instagram</td></tr>
+              <tr><td>Dining / chef-prepared meals</td><td><strong>15</strong></td><td>Instagram</td></tr>
+              <tr><td>Wellness / spa and fitness</td><td><strong>13</strong></td><td>Instagram</td></tr>
+              <tr><td>FAQ / Q&amp;A post</td><td>1</td><td>Facebook</td></tr>
+              <tr><td>Renderings reveal</td><td>1</td><td>Facebook</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- SECTION 2 -->
-  <div class="report-section">
-    <div class="section-number">Section 2</div>
-    <div class="section-title">Pacing Through Race Day</div>
-    <div class="kpi-strip" style="grid-template-columns:repeat(3,1fr);">
-      <div class="kpi"><div class="kpi-label">Flight Budget</div><div class="kpi-value">$9,500</div><div class="kpi-sub fl">Oct. 6 &ndash; Nov. 26, 2026</div></div>
-      <div class="kpi"><div class="kpi-label">Pacing</div><div class="kpi-value">On track</div><div class="kpi-sub fl">Daily budgets set through race day</div></div>
-      <div class="kpi"><div class="kpi-label">Days Remaining</div><div class="kpi-value">9</div><div class="kpi-sub fl">Ends Nov. 26, 6:00 a.m. CT</div></div>
+    <div class="data-card" style="margin-top:16px;">
+      <div class="dc-title">Competitor Social Benchmarks</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Competitor</th><th>Followers</th><th>Posts (Period)</th><th>Est. Engagement</th></tr></thead>
+          <tbody>
+            <tr><td><strong>CC Young</strong></td><td>5,802</td><td>18</td><td>14.056</td></tr>
+            <tr><td>Ventana by Buckner</td><td>1,168</td><td>15</td><td>3.733</td></tr>
+            <tr><td>Clearwater Highland Park</td><td>105</td><td>9</td><td>1.556</td></tr>
+            <tr><td>The Plaza at Edgemere</td><td>30</td><td>6</td><td>0.667</td></tr>
+            <tr><td>Preston of the Park Cities</td><td>1,190</td><td>3</td><td>0.333</td></tr>
+            <tr style="font-weight:700;color:var(--red);"><td>Vivante Turtle Creek</td><td>201</td><td>22</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- SECTION 3 -->
-  <div class="report-section">
-    <div class="section-number">Section 3</div>
-    <div class="section-title">What to Watch Through Race Day</div>
-    <div class="rec-list">
-      <div class="rec-item"><div class="rec-num">01</div><div class="rec-body"><strong>New video ads.</strong> The Costume Video and Mascot Video ads target a broader family audience that includes parents of children from toddlers to teens. They also give people who have already seen the original ads something new, which helps prevent creative fatigue as the campaign builds toward race day. Since launch they have driven 9,008 landing page views combined, with the Costume Video at $0.26 per view and the Mascot Video at $0.62.</div></div>
-      <div class="rec-item"><div class="rec-num">02</div><div class="rec-body"><strong>Start Line vs. Giant Turkey videos.</strong> The Start Line Video continues to deliver at $0.16 per landing page view, and Meta is directing nearly all of its ad group&rsquo;s spend there. The Giant Turkey Video ($0.25 per view) is receiving only a small share.</div></div>
-      <div class="rec-item"><div class="rec-num">03</div><div class="rec-body"><strong>Pacing check.</strong> Pacing was reviewed the week of November 9 and remains on track heading into the final push of Thanksgiving week.</div></div>
-      <div class="rec-item"><div class="rec-num">04</div><div class="rec-body"><strong>Registrations.</strong> Landing page views show how many people reached the registration page, not how many signed up. Race Roster registration totals for the same period would show how many visits became registrations.</div></div>
+<!-- PAGE: SEO -->
+<div id="page-seo" class="page">
+  <div class="report-body" style="padding-top:32px;">
+    <div class="section-number">Supporting Data</div>
+    <div class="section-title">SEO &amp; Site Health</div>
+    <p style="font-family:var(--condensed);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray);margin-bottom:12px;">PageSpeed Insights &mdash; vivanteliving.com &mdash; May 12, 2026</p>
+    <div class="score-row">
+      <div class="score"><div class="score-num s-amber">64</div><div class="score-lbl">Performance</div></div>
+      <div class="score"><div class="score-num s-amber">85</div><div class="score-lbl">Accessibility</div></div>
+      <div class="score"><div class="score-num s-amber">73</div><div class="score-lbl">Best Practices</div></div>
+      <div class="score"><div class="score-num s-green">92</div><div class="score-lbl">SEO</div></div>
+    </div>
+    <div class="note" style="margin-top:12px;">Core Web Vitals assessment passed on real user data. Independent testing flagged significant speed and structural issues on mobile — a concern for a site receiving $35K/month in paid traffic.</div>
+    <div class="data-grid-2" style="margin-top:20px;">
+      <div class="data-card">
+        <div class="dc-title">Keyword Rankings &mdash; SEMrush</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Keyword</th><th>Position</th><th>Monthly Vol.</th></tr></thead>
+            <tbody>
+              <tr><td>vivante newport center</td><td><span class="badge b-green">#1</span></td><td>1,000</td></tr>
+              <tr><td>vivante newport mesa</td><td><span class="badge b-green">#1</span></td><td>720</td></tr>
+              <tr><td>vivante costa mesa</td><td><span class="badge b-green">#1</span></td><td>590</td></tr>
+              <tr><td>vivante newport beach</td><td><span class="badge b-green">#1</span></td><td>210</td></tr>
+              <tr><td>senior living newport beach</td><td><span class="badge b-green">#1</span></td><td>140</td></tr>
+              <tr><td>vivante</td><td><span class="badge b-gray">#2</span></td><td>1,300</td></tr>
+              <tr><td>assisted living orange county</td><td><span class="badge b-red">#26</span></td><td>880</td></tr>
+              <tr><td>assisted living in orange county</td><td><span class="badge b-red">#23</span></td><td>170</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="data-card">
+        <div class="dc-title">Critical Performance Issues</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Issue</th><th>Severity</th><th>Priority</th></tr></thead>
+            <tbody>
+              <tr><td>Fix structural code errors slowing page load</td><td><span class="badge b-red">Critical</span></td><td>High impact</td></tr>
+              <tr><td>Improve overall page processing speed</td><td><span class="badge b-red">Critical</span></td><td>High impact</td></tr>
+              <tr><td>Reduce time-to-interactive on mobile</td><td><span class="badge b-red">Critical</span></td><td>High impact</td></tr>
+              <tr><td>Improve page caching for returning visitors</td><td><span class="badge b-amber">Medium</span></td><td>Medium impact</td></tr>
+              <tr><td>Clean up unused styling code</td><td><span class="badge b-amber">Medium</span></td><td>Medium impact</td></tr>
+              <tr><td>Optimize image delivery for faster load</td><td><span class="badge b-amber">Medium</span></td><td>Medium impact</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="data-card" style="margin-top:16px;">
+      <div class="dc-title">Backlink Health</div>
+      <div class="data-grid-4" style="margin-top:12px;">
+        <div><div class="kpi-label">Total Backlinks</div><div class="kpi-value" style="font-size:24px;">5,286</div></div>
+        <div><div class="kpi-label">New Links</div><div class="kpi-value up" style="font-size:24px;">+719</div></div>
+        <div><div class="kpi-label">Lost Links</div><div class="kpi-value dn" style="font-size:24px;">&minus;2,755</div></div>
+        <div><div class="kpi-label">Avg Authority Score</div><div class="kpi-value warn" style="font-size:24px;">5/100</div></div>
+      </div>
+      <div class="note" style="margin-top:12px;">Net loss of 2,036 links this period at low average authority. Outreach to A Place for Mom, Seniorly and Caring.com would improve both domain authority and referral traffic quality.</div>
     </div>
   </div>
-
 </div>
 
 <footer class="site-footer">
-  <div class="sf-left">Confidential &mdash; prepared by <span>Allyn</span> for the YMCA of Metropolitan Dallas &middot; November 2026 &middot; <span>allynmedia.com</span></div>
-  <div class="sf-right">Allyn Insights &middot; Meta Ads Progress Report</div>
+  <div class="sf-left">Confidential &mdash; prepared by <span>Allyn Media</span> for Vivante &middot; May 2026 &middot; <span>allynmedia.com</span></div>
+  <div class="sf-right">Allyn Insights &middot; Monthly Intelligence Report</div>
 </footer>
 
+<script>
+Chart.defaults.font.family = "'Barlow', sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#888A8D';
+
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'paid' && !window._convDone) initConvChart();
+  if (name === 'website' && !window._chanDone) initChannelChart();
+}
+
+new Chart(document.getElementById('sentChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Neutral', 'No classification'],
+    datasets: [{ data: [57, 43], backgroundColor: ['#CE202E', '#e8e8e8'], borderWidth: 0 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '65%',
+    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, padding: 10 } } }
+  }
+});
+
+new Chart(document.getElementById('earnedChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Atria Senior Living', 'CC Young', 'Vivante TC'],
+    datasets: [{ data: [286, 177, 16], backgroundColor: ['#888A8D', '#1a1a1a', '#CE202E'], borderRadius: 4 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: { x: { grid: { display: false } }, y: { grid: { color: '#f5f5f5' } } }
+  }
+});
+
+function initConvChart() {
+  window._convDone = true;
+  new Chart(document.getElementById('convChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Brand', 'YT Conv.', 'OC Assist.', 'Mem. Care'],
+      datasets: [
+        { label: 'Spend ($K)', data: [5.2, 3.6, 22.8, 3.3], backgroundColor: 'rgba(206,32,46,.15)', borderColor: '#CE202E', borderWidth: 1.5, borderRadius: 3, yAxisID: 'y' },
+        { label: 'Conversions', data: [124.5, 65, 62.5, 5], backgroundColor: '#1a1a1a', borderRadius: 3, yAxisID: 'y1' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { boxWidth: 10 } } },
+      scales: {
+        y: { position: 'left', grid: { color: '#f5f5f5' }, ticks: { callback: v => '$' + v + 'K' } },
+        y1: { position: 'right', grid: { display: false } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+}
+
+function initChannelChart() {
+  window._chanDone = true;
+  new Chart(document.getElementById('channelChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Paid Search', 'Organic Search', 'Cross-network', 'Direct', 'Paid Social', 'Other'],
+      datasets: [{ data: [5190, 3900, 3661, 2259, 1758, 522], backgroundColor: ['#CE202E','#1a1a1a','#888A8D','#aaa','#ccc','#e0e0e0'], borderWidth: 0 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '58%',
+      plugins: { legend: { position: 'right', labels: { boxWidth: 10, padding: 10 } } }
+    }
+  });
+}
+
+function printReport() {
+  // Ensure charts are rendered before printing
+  window.print();
+}
+</script>
 </body>
 </html>
